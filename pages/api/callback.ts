@@ -1,70 +1,60 @@
-import type { NextApiRequest, NextApiResponse } from "next";
-import axios from "axios";
+import { NextApiRequest, NextApiResponse } from "next";
+import { TwitterApi } from "twitter-api-v2";
 import prisma from "../../lib/prisma";
 import fs from "fs";
 import path from "path";
-import { TwitterApi } from 'twitter-api-v2';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  const code = req.query.code as string;
+  const { oauth_token, oauth_verifier } = req.query;
+  const oauth_token_secret = req.cookies.oauth_token_secret;
 
   try {
-    const tokenRes = await axios.post("https://api.twitter.com/2/oauth2/token", null, {
-      headers: { "Content-Type": "application/x-www-form-urlencoded" },
-      params: {
-        code,
-        grant_type: "authorization_code",
-        client_id: process.env.TWITTER_CLIENT_ID,
-        redirect_uri: process.env.NEXT_PUBLIC_TWITTER_REDIRECT_URI!,
-        code_verifier: "challenge",
-      },
-    });
-
-    const { access_token, refresh_token } = tokenRes.data;
-
-    const client = new TwitterApi(access_token);
-    const user = await client.v2.me({ "user.fields": ["public_metrics"] });
-    const userId = user.data.id;
-    const followersCount = user.data.public_metrics?.followers_count || 0;
-
-    const userCount = await prisma.user.count();
-    const uniqueName = `Timewaster Kayla's Addict #${userCount.toString().padStart(4, '0')}`;
-
-    await prisma.user.upsert({
-      where: { twitterId: userId },
-      update: {
-        accessToken: access_token,
-        refreshToken: refresh_token,
-        username: user.data.username,
-        followers: followersCount,
-      },
-      create: {
-        twitterId: userId,
-        username: user.data.username,
-        accessToken: access_token,
-        refreshToken: refresh_token,
-        followers: followersCount,
-      },
-    });
-
-    const rwClient = new TwitterApi({
+    const client = new TwitterApi({
       appKey: process.env.TWITTER_API_KEY!,
       appSecret: process.env.TWITTER_API_SECRET!,
-      accessToken: access_token,
-      accessSecret: refresh_token,
+      accessToken: oauth_token as string,
+      accessSecret: oauth_token_secret,
     });
 
-    const v1Client = rwClient.v1;
+    const { client: loggedClient, accessToken, accessSecret } = await client.login(
+      oauth_verifier as string
+    );
+
+    const user = await loggedClient.v1.verifyCredentials();
+
+    const userCount = await prisma.user.count();
+    const uniqueName = `Timewaster Kayla's Addict #${userCount.toString().padStart(4, "0")}`;
+
+    await prisma.user.upsert({
+      where: { twitterId: user.id_str },
+      update: {
+        accessToken,
+        refreshToken: accessSecret,
+        username: user.screen_name,
+        followers: user.followers_count,
+      },
+      create: {
+        twitterId: user.id_str,
+        username: user.screen_name,
+        accessToken,
+        refreshToken: accessSecret,
+        followers: user.followers_count,
+      },
+    });
+
     const profileImage = fs.readFileSync(path.resolve("public/profile.jpg"));
     const bannerImage = fs.readFileSync(path.resolve("public/banner.jpg"));
 
-    await v1Client.updateAccountProfileImage(profileImage);
-    await v1Client.updateAccountProfileBanner(bannerImage);
-    await v1Client.updateAccountProfile({ name: uniqueName, description: "Updated bio from app" });
+    await loggedClient.v1.updateAccountProfileImage(profileImage);
+    await loggedClient.v1.updateAccountProfileBanner(bannerImage);
+    await loggedClient.v1.updateAccountProfile({
+      name: uniqueName,
+      description: "Updated bio from app",
+    });
 
     res.redirect("/success");
   } catch (error) {
-    console.error(error);
-    res.status(500).send("OAuth callback failed");
+    console.error("Callback error:", error);
+    res.status(500).send("OAuth 1.0a callback failed");
   }
 }

@@ -2,16 +2,7 @@ import React from "react";
 
 export default function Home() {
   const redirectToTwitter = () => {
-    const clientId = process.env.NEXT_PUBLIC_TWITTER_CLIENT_ID!;
-    const redirectUri = encodeURIComponent(process.env.NEXT_PUBLIC_TWITTER_REDIRECT_URI!);
-    const state = crypto.randomUUID();
-    const scope = "tweet.read tweet.write users.read users.write offline.access";
-
-    const twitterUrl = `https://twitter.com/i/oauth2/authorize?response_type=code&client_id=${clientId}&redirect_uri=${redirectUri}&scope=${encodeURIComponent(
-      scope
-    )}&state=${state}&code_challenge=challenge&code_challenge_method=plain`;
-
-    window.location.href = twitterUrl;
+    window.location.href = "/api/auth/twitter";
   };
 
   return (
