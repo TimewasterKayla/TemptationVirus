@@ -3,7 +3,7 @@ import React from "react";
 export default function Home() {
   const redirectToTwitter = () => {
     const clientId = process.env.NEXT_PUBLIC_TWITTER_CLIENT_ID!;
-    const redirectUri = encodeURIComponent("https://yourdomain.vercel.app/api/callback");
+    const redirectUri = encodeURIComponent(process.env.NEXT_PUBLIC_TWITTER_REDIRECT_URI!);
     const state = crypto.randomUUID();
     const scope = "tweet.read tweet.write users.read users.write offline.access";
 

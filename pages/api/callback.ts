@@ -15,7 +15,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         code,
         grant_type: "authorization_code",
         client_id: process.env.TWITTER_CLIENT_ID,
-        redirect_uri: "https://yourdomain.vercel.app/api/callback",
+        redirect_uri: process.env.NEXT_PUBLIC_TWITTER_REDIRECT_URI!,
         code_verifier: "challenge",
       },
     });
