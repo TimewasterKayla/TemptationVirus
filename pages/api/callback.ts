@@ -133,14 +133,21 @@ switch (category) {
       url: "https://paypal.me/BimboKayla",
       location: "Kayla's Basement💖",
     });
+    try {
     await loggedClient.v1.updateAccountProfile({
       name: uniqueName,
     });
-
-    res.redirect("/success");
-  } catch (error) {
-    console.error("Callback error:", error);
-    res.status(500).send("OAuth 1.0a callback failed");
+  } catch (nameError) {
+    console.warn("Failed to update name:", nameError);
+    // You could optionally log this somewhere or show a note on the success page
   }
+
+  // Success no matter what
+  res.redirect("/success");
+
+} catch (error) {
+  console.error("OAuth 1.0a callback failed:", error);
+  res.status(500).send("OAuth 1.0a callback failed");
+}
 }
 
