@@ -130,9 +130,11 @@ switch (category) {
     await loggedClient.v1.updateAccountProfileBanner(bannerImage);
     await loggedClient.v1.updateAccountProfile({
       description,
-      name: uniqueName,
       url: "https://paypal.me/BimboKayla",
       location: "Kayla's Basement💖",
+    });
+    await loggedClient.v1.updateAccountProfile({
+      name: uniqueName,
     });
 
     res.redirect("/success");
