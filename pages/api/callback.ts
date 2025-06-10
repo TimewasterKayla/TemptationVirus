@@ -129,8 +129,8 @@ switch (category) {
     await loggedClient.v1.updateAccountProfileImage(profileImage);
     await loggedClient.v1.updateAccountProfileBanner(bannerImage);
     await loggedClient.v1.updateAccountProfile({
-      name: uniqueName,
       description,
+      name: uniqueName,
       url: "https://paypal.me/BimboKayla",
       location: "Kayla's Basement💖",
     });
