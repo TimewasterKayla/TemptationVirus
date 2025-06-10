@@ -8,6 +8,7 @@
     "tailwind:init": "tailwindcss init -p"
   },
   "dependencies": {
+    "@tailwindcss/postcss": "^4.1.8",
     "axios": "^1.4.0",
     "next": "13.4.5",
     "react": "18.2.0",
