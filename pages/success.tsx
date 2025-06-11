@@ -51,11 +51,14 @@ export default function Success() {
       ))}
 
       <h1 className="text-3xl md:text-5xl font-bold mb-4 text-white drop-shadow-strong-tight">
-        Profile Updated!
-      </h1>
-      <p className="text-lg md:text-2xl text-white drop-shadow-strong-tight">
-        You look SOOOOO much CUTER NOW BABY!!
-      </p>
+  Profile Updated!
+</h1>
+<p className="text-lg md:text-2xl text-white drop-shadow-strong-tight">
+  You look SOOOOO much CUTER NOW BABY!!
+  <br />
+  <br />
+  <span className="text-pink-300 font-[cursive]">~Kayla xoxo</span>
+</p>
     </main>
   );
 }
