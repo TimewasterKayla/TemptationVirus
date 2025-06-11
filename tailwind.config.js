@@ -24,15 +24,18 @@ module.exports = {
     },
   },
   plugins: [
-    // Add your glow utility here via the plugin system
-    function ({ addUtilities }) {
-      addUtilities({
-        '.glow-white': {
-          textShadow: '0 0 6px white',
-        },
-      });
-    },
-  ],
+  function ({ addUtilities }) {
+    addUtilities({
+      '.glow-white': {
+        textShadow: '0 0 6px white',
+      },
+      '.no-drop-shadow': {
+        filter: 'none',
+        boxShadow: 'none',
+      },
+    });
+  },
+],
 };
 
 

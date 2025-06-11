@@ -57,7 +57,7 @@ export default function Success() {
   You look SOOOOO much CUTER NOW BABY!!
   <br />
   <br />
-  <span className="text-pink-300 italic glow-white">~Kayla xoxo</span>
+  <span className="text-pink-300 italic glow-white no-drop-shadow">~Kayla xoxo</span>
 </p>
     </main>
   );
