@@ -1,19 +1,49 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 export default function Home() {
   const redirectToTwitter = () => {
     window.location.href = "/api/auth/twitter";
   };
 
+  // Generate floating emoji configs
+  const [emojis, setEmojis] = useState<
+    { id: number; left: string; delay: string; size: string; emoji: string; color: string }[]
+  >([]);
+
+  useEffect(() => {
+    const generateEmojis = () => {
+      const emojiSet = ['✨', '🌺', '🌼', '🔥', '💦', '💋'];
+      const colors = ['text-pink-300', 'text-yellow-300', 'text-red-400', 'text-blue-300'];
+      const sizes = ['text-xl', 'text-2xl', 'text-3xl'];
+
+      return Array.from({ length: 10 }, (_, i) => ({
+        id: i,
+        left: `${Math.floor(Math.random() * 90)}%`,
+        delay: `${Math.random() * 5}s`,
+        size: sizes[Math.floor(Math.random() * sizes.length)],
+        emoji: emojiSet[Math.floor(Math.random() * emojiSet.length)],
+        color: colors[Math.floor(Math.random() * colors.length)],
+      }));
+    };
+
+    setEmojis(generateEmojis());
+  }, []);
+
   return (
     <main className="relative flex flex-col items-center justify-center min-h-screen p-6 text-center bg-[url('/backgrounds/backgroundhearts.jpg')] bg-cover bg-center overflow-hidden">
       {/* Floating Emojis */}
-      <div className="absolute top-0 left-1/4 animate-float-heart text-yellow-300 text-2xl">✨</div>
-      <div className="absolute top-10 right-1/3 animate-float-heart text-pink-400 text-3xl [animation-delay:1s]">🌺</div>
-      <div className="absolute top-20 left-1/5 animate-float-heart text-yellow-400 text-xl [animation-delay:2s]">🌼</div>
-      <div className="absolute top-0 right-1/5 animate-float-heart text-red-500 text-2xl [animation-delay:3s]">🔥</div>
-      <div className="absolute top-10 left-1/3 animate-float-heart text-blue-300 text-2xl [animation-delay:4s]">💦</div>
-      <div className="absolute top-20 right-1/4 animate-float-heart text-pink-500 text-3xl [animation-delay:5s]">💋</div>
+      {emojis.map((item) => (
+        <div
+          key={item.id}
+          className={`absolute top-full animate-float-heart ${item.color} ${item.size}`}
+          style={{
+            left: item.left,
+            animationDelay: item.delay,
+          }}
+        >
+          {item.emoji}
+        </div>
+      ))}
 
       <h1 className="text-3xl font-bold mb-6 text-white drop-shadow-strong-tight">
         💖Suspicious Button💖
@@ -27,5 +57,3 @@ export default function Home() {
     </main>
   );
 }
-
-
