@@ -1,7 +1,4 @@
 @import "tailwindcss";
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
 @keyframes floatUp {
   0% {
     transform: translateY(0) scale(1);
@@ -19,3 +16,4 @@
   font-size: 1.5rem;
   pointer-events: none;
 }
+
