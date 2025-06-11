@@ -39,20 +39,27 @@ export default function Home() {
   }, []);
 
   useEffect(() => {
-    const profileFilenames = [
-      "image1.jpg", "image2.jpg", "image17.jpg", "image16.jpg", "image27.jpg", "image31.png", "image28.jpg", "image20.jpg"
-    ];
-
-    const spawnImage = () => {
+    const spawnImage = async () => {
       const MAX_TRIES = 20;
       let tries = 0;
       let newImage: ImageItem | null = null;
+
+      // Get a random image from the API
+      let filename: string | null = null;
+      try {
+        const res = await fetch("/api/profile-images");
+        const data = await res.json();
+        filename = data.filename;
+      } catch {
+        console.error("Failed to fetch image from API");
+        return;
+      }
 
       while (tries < MAX_TRIES) {
         const topPercent = Math.random() * 90;
         const leftPercent = Math.random() * 90;
 
-        // Skip central area (35% - 65%)
+        // Skip center area (35%-65%)
         if (
           topPercent >= 35 && topPercent <= 65 &&
           leftPercent >= 35 && leftPercent <= 65
@@ -61,17 +68,17 @@ export default function Home() {
           continue;
         }
 
-        // Avoid overlap (min 64px distance)
+        // Avoid overlap (assume 1% ~ 8px on 800px screen, 64px spacing)
         const isOverlapping = images.some(img => {
           const deltaX = Math.abs(parseFloat(img.left) - leftPercent);
           const deltaY = Math.abs(parseFloat(img.top) - topPercent);
-          return deltaX < 8 && deltaY < 8; // since 1% ~ 8px on 800px screen
+          return deltaX < 8 && deltaY < 8;
         });
 
         if (!isOverlapping) {
           newImage = {
             id: nextId,
-            src: `/profiles/${profileFilenames[Math.floor(Math.random() * profileFilenames.length)]}`,
+            src: `/profiles/${filename}`,
             top: `${topPercent}%`,
             left: `${leftPercent}%`,
           };
@@ -115,7 +122,7 @@ export default function Home() {
         </div>
       ))}
 
-      {/* Floating Profile Images (now 2x size, 64x64px) */}
+      {/* Floating Profile Images (2x size) */}
       {images.map((img) => (
         <img
           key={img.id}
