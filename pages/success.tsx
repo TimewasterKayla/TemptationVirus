@@ -58,9 +58,8 @@ export default function Success() {
   <br />
   <br />
   <span
-    className="text-pink-300 italic animate-pulse-glow"
+    className="text-pink-500 italic animate-pulse-glow"
     style={{
-      textShadow: '0 0 8px rgba(255, 255, 255, 0.9)',
       filter: 'none', // neutralizes any inherited drop-shadow
     }}
   >
