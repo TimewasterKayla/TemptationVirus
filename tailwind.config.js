@@ -12,17 +12,27 @@ module.exports = {
         float: {
           '0%': { transform: 'translateY(100%)', opacity: 0 },
           '50%': { opacity: 1 },
-          '100%': { transform: 'translateY(-100vh)', opacity: 0 }
-        }
+          '100%': { transform: 'translateY(-100vh)', opacity: 0 },
+        },
       },
       animation: {
         'float-heart': 'float 8s linear infinite',
       },
       dropShadow: {
-        'strong-tight': '0 2px 2px rgba(0, 0, 0, 0.7)', // new custom shadow
+        'strong-tight': '0 2px 2px rgba(0, 0, 0, 0.7)',
       },
     },
   },
-  plugins: [],
+  plugins: [
+    // Add your glow utility here via the plugin system
+    function ({ addUtilities }) {
+      addUtilities({
+        '.glow-white': {
+          textShadow: '0 0 6px white',
+        },
+      });
+    },
+  ],
 };
+
 
