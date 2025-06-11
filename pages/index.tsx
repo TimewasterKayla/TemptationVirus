@@ -5,16 +5,21 @@ export default function Home() {
     window.location.href = "/api/auth/twitter";
   };
 
-  // Generate floating emoji configs
+  // Floating emojis config
   const [emojis, setEmojis] = useState<
     { id: number; left: string; delay: string; size: string; emoji: string; color: string }[]
   >([]);
 
+  // Floating profile images config
+  const [images, setImages] = useState<
+    { id: number; src: string; top: string; left: string; delay: string }[]
+  >([]);
+
   useEffect(() => {
     const generateEmojis = () => {
-      const emojiSet = ['✨', '🌺', '🌼', '🔥', '💦', '💋'];
-      const colors = ['text-pink-300', 'text-yellow-300', 'text-red-400', 'text-blue-300'];
-      const sizes = ['text-xl', 'text-2xl', 'text-3xl'];
+      const emojiSet = ["✨", "🌺", "🌼", "🔥", "💦", "💋"];
+      const colors = ["text-pink-300", "text-yellow-300", "text-red-400", "text-blue-300"];
+      const sizes = ["text-xl", "text-2xl", "text-3xl"];
 
       return Array.from({ length: 10 }, (_, i) => ({
         id: i,
@@ -29,8 +34,33 @@ export default function Home() {
     setEmojis(generateEmojis());
   }, []);
 
+  useEffect(() => {
+    const profileFilenames = [
+      "image1.jpg", "image2.jpg", "image17.jpg", "image16.jpg", "image27.jpg", "image31.png", "image28.jpg", "image20.jpg"
+    ];
+
+    const generateImages = () => {
+      return Array.from({ length: 4 }, (_, i) => ({
+        id: i,
+        src: `/profiles/${profileFilenames[Math.floor(Math.random() * profileFilenames.length)]}`,
+        top: `${Math.random() * 80}%`,
+        left: `${Math.random() * 80}%`,
+        delay: `${Math.random() * 4}s`,
+      }));
+    };
+
+    setImages(generateImages());
+
+    const interval = setInterval(() => {
+      setImages(generateImages());
+    }, 8000); // 4s fade in + 4s fade out
+
+    return () => clearInterval(interval);
+  }, []);
+
   return (
     <main className="relative flex flex-col items-center justify-center min-h-screen p-6 text-center bg-[url('/backgrounds/backgroundhearts.jpg')] bg-cover bg-center overflow-hidden">
+
       {/* Floating Emojis */}
       {emojis.map((item) => (
         <div
@@ -43,6 +73,17 @@ export default function Home() {
         >
           {item.emoji}
         </div>
+      ))}
+
+      {/* Floating Profile Images */}
+      {images.map((img) => (
+        <img
+          key={img.id}
+          src={img.src}
+          className="absolute w-16 h-16 object-cover rounded-md animate-fade-in-out opacity-80 pointer-events-none"
+          style={{ top: img.top, left: img.left, animationDelay: img.delay }}
+          alt="Floating profile"
+        />
       ))}
 
       <h1 className="text-3xl font-bold mb-6 text-white drop-shadow-strong-tight">

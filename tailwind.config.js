@@ -24,9 +24,17 @@ module.exports = {
             textShadow: '0 0 16px rgba(255, 255, 255, 1)',
           },
         },
+        fadeInOut: {
+          '0%': { opacity: '0' },
+          '25%': { opacity: '0.8' },
+          '75%': { opacity: '0.8' },
+          '100%': { opacity: '0' },
+        },
       },
       animation: {
         'float-heart': 'float 8s linear infinite',
+        'fade-in-out': 'fadeInOut 8s ease-in-out infinite',
+        'pulse-glow': 'pulseGlow 2s ease-in-out infinite',
       },
       dropShadow: {
         'strong-tight': '0 2px 2px rgba(0, 0, 0, 0.7)',
