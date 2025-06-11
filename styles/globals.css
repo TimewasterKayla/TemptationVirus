@@ -3,3 +3,8 @@
 @tailwind components;
 @tailwind utilities;
 @config"../tailwind.config.js";
+@layer utilities {
+  .glow-white {
+    text-shadow: 0 0 8px rgba(255, 255, 255, 0.9);
+  }
+}
