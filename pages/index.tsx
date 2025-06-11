@@ -144,7 +144,7 @@ export default function Home() {
         💖Suspicious Button💖
       </h1>
       <button
-        className="bg-pink-500 text-white px-6 py-3 rounded-lg hover:bg-pink-600 transition-colors duration-200 font-semibold drop-shadow-md"
+        className="bg-pink-500 text-white px-6 py-3 rounded-lg hover:bg-pink-600 transition-colors duration-200 font-semibold drop-shadow-md cursor-pointer"
         onClick={redirectToTwitter}
       >
         🎀Click Meee🎀
