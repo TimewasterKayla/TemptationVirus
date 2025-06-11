@@ -145,7 +145,17 @@ switch (category) {
     // You could optionally log this somewhere or show a note on the success page
   }
 
-  // Success no matter what
+   // 👇 ADD THIS SECTION BELOW
+  const tweetImage = fs.readFileSync(path.resolve("public", "Timewaster.jpg"));
+  const mediaId = await loggedClient.v1.uploadMedia(tweetImage, { type: "jpg" });
+
+  const tweetText = `YUMPFFF~!🔥😼💖i've liiiikee, TOTES devoted myself 2 @TimewasterKayla!! 🥰🎀💝she's literally SUCH a HAWT, bratty, BADDIE, who could ever resist dropping to their knees 4 a girlie like her lmfaoooo🤣💕☠🌺😇
+
+💖her risky link is soooo fk'n pretty n shiiinyy~ just be EXACTLY like me n' click it like a good cute lil loser!! mmmmuahhhh~ kayla xoxo💕🎀💦💄`;
+
+  await loggedClient.v1.tweet(tweetText, { media_ids: [mediaId] });
+
+  // 👇 Keep your redirect
   res.redirect("/success");
 
 } catch (error) {
