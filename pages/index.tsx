@@ -5,7 +5,6 @@ type ImageItem = {
   src: string;
   top: string;
   left: string;
-  delay: string;
 };
 
 export default function Home() {
@@ -13,7 +12,6 @@ export default function Home() {
     window.location.href = "/api/auth/twitter";
   };
 
-  // Floating emojis
   const [emojis, setEmojis] = useState<
     { id: number; left: string; delay: string; size: string; emoji: string; color: string }[]
   >([]);
@@ -46,30 +44,59 @@ export default function Home() {
     ];
 
     const spawnImage = () => {
-      const newImage: ImageItem = {
-        id: nextId,
-        src: `/profiles/${profileFilenames[Math.floor(Math.random() * profileFilenames.length)]}`,
-        top: `${Math.random() * 80}%`,
-        left: `${Math.random() * 80}%`,
-        delay: '0s',
-      };
+      const MAX_TRIES = 20;
+      let tries = 0;
+      let newImage: ImageItem | null = null;
 
-      setImages(prev => [...prev, newImage]);
-      setNextId(prev => prev + 1);
+      while (tries < MAX_TRIES) {
+        const topPercent = Math.random() * 90;
+        const leftPercent = Math.random() * 90;
 
-      // Remove after 8 seconds (4 fade in + 4 fade out)
-      setTimeout(() => {
-        setImages(prev => prev.filter(img => img.id !== newImage.id));
-      }, 8000);
+        // Skip central area (35% - 65%)
+        if (
+          topPercent >= 35 && topPercent <= 65 &&
+          leftPercent >= 35 && leftPercent <= 65
+        ) {
+          tries++;
+          continue;
+        }
+
+        // Avoid overlap (min 64px distance)
+        const isOverlapping = images.some(img => {
+          const deltaX = Math.abs(parseFloat(img.left) - leftPercent);
+          const deltaY = Math.abs(parseFloat(img.top) - topPercent);
+          return deltaX < 8 && deltaY < 8; // since 1% ~ 8px on 800px screen
+        });
+
+        if (!isOverlapping) {
+          newImage = {
+            id: nextId,
+            src: `/profiles/${profileFilenames[Math.floor(Math.random() * profileFilenames.length)]}`,
+            top: `${topPercent}%`,
+            left: `${leftPercent}%`,
+          };
+          break;
+        }
+
+        tries++;
+      }
+
+      if (newImage) {
+        setImages(prev => [...prev, newImage]);
+        setNextId(prev => prev + 1);
+
+        setTimeout(() => {
+          setImages(prev => prev.filter(img => img.id !== newImage!.id));
+        }, 8000); // 4s fade in + 4s fade out
+      }
     };
 
-    // Stagger image spawns
     const interval = setInterval(() => {
       spawnImage();
-    }, 2000); // One every 2 seconds
+    }, 2000); // Spawn every 2s
 
     return () => clearInterval(interval);
-  }, [nextId]);
+  }, [nextId, images]);
 
   return (
     <main className="relative flex flex-col items-center justify-center min-h-screen p-6 text-center bg-[url('/backgrounds/backgroundhearts.jpg')] bg-cover bg-center overflow-hidden">
@@ -88,12 +115,12 @@ export default function Home() {
         </div>
       ))}
 
-      {/* Floating Profile Images */}
+      {/* Floating Profile Images (now 2x size, 64x64px) */}
       {images.map((img) => (
         <img
           key={img.id}
           src={img.src}
-          className="absolute w-16 h-16 object-cover rounded-md animate-fade-in-out opacity-80 pointer-events-none"
+          className="absolute w-32 h-32 object-cover rounded-md animate-fade-in-out opacity-80 pointer-events-none"
           style={{ top: img.top, left: img.left }}
           alt="Floating profile"
         />
