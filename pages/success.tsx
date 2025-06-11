@@ -75,6 +75,13 @@ export default function Success() {
         alt="Kayla gif"
         className="w-64 h-auto rounded-lg drop-shadow-lg mt-2"
       />
+       {/* Button Below GIF */}
+      <button
+        className="mt-6 bg-pink-500 text-white px-6 py-3 rounded-lg hover:bg-pink-600 transition-colors duration-200 font-semibold drop-shadow-md cursor-pointer"
+        onClick={() => window.location.href = "https://youtube.com"}
+      >
+        😵Still Feeling Stupid? c;😵
+      </button>
     </main>
   );
 }
