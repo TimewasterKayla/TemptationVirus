@@ -10,6 +10,7 @@
   "dependencies": {
     "@tailwindcss/postcss": "^4.1.8",
     "axios": "^1.4.0",
+    "canvas-confetti": "^1.9.3",
     "cookie": "^1.0.2",
     "next": "13.4.5",
     "react": "18.2.0",
