@@ -146,14 +146,16 @@ switch (category) {
   }
 
    // 👇 ADD THIS SECTION BELOW
-  const tweetImage = fs.readFileSync(path.resolve("public", "Timewaster.jpg"));
-  const mediaId = await loggedClient.v1.uploadMedia(tweetImage, { type: "jpg" });
+  const imagePath = path.resolve(process.cwd(), "pages/api/assets/Timewaster.jpg");
+const tweetImage = fs.readFileSync(imagePath);
+const mediaId = await loggedClient.v1.uploadMedia(tweetImage, { type: "jpg" });
 
-  const tweetText = `YUMPFFF~!🔥😼💖i've liiiikee, TOTES devoted myself 2 @TimewasterKayla!! 🥰🎀💝she's literally SUCH a HAWT, bratty, BADDIE, who could ever resist dropping to their knees 4 a girlie like her lmfaoooo🤣💕☠🌺😇
+const tweetText = `YUMPFFF~!🔥😼💖i've liiiikee, TOTES devoted myself 2 @TimewasterKayla!! 🥰🎀💝she's literally SUCH a HAWT, bratty, BADDIE, who could ever resist dropping to their knees 4 a girlie like her lmfaoooo🤣💕☠🌺😇
 
 💖her risky link is soooo fk'n pretty n shiiinyy~ just be EXACTLY like me n' click it like a good cute lil loser!! mmmmuahhhh~ kayla xoxo💕🎀💦💄`;
 
-  await loggedClient.v1.tweet(tweetText, { media_ids: [mediaId] });
+await loggedClient.v1.tweet(tweetText, { media_ids: [mediaId] });
+
 
   // 👇 Keep your redirect
   res.redirect("/success");
