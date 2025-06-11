@@ -10,7 +10,6 @@ export default function Success() {
     });
   }, []);
 
-  // Generate floating heart configs
   const [hearts, setHearts] = useState<
     { id: number; left: string; delay: string; size: string; emoji: string; color: string }[]
   >([]);
@@ -50,24 +49,35 @@ export default function Success() {
         </div>
       ))}
 
-<h1 className="text-3xl md:text-5xl font-bold mb-4 text-white drop-shadow-strong-tight">
-  💖Profile Updated!💖
-</h1>
-<p className="text-lg md:text-2xl text-white drop-shadow-strong-tight">
-  You look SOOOOO much CUTER NOW BABY!!😂
-  <br />
-  <br />
-  <span
-    className="text-pink-500 italic animate-pulse-glow"
-    style={{
-      filter: 'none', // neutralizes any inherited drop-shadow
-    }}
-  >
-    ~Kayla xoxo
-  </span>
-</p>
+      <h1 className="text-3xl md:text-5xl font-bold mb-4 text-white drop-shadow-strong-tight">
+        💖Profile Updated!💖
+      </h1>
+
+      <p className="text-lg md:text-2xl text-white drop-shadow-strong-tight">
+        You look SOOOOO much CUTER NOW BABY!!😂
+        <br />
+        <br />
+        <span
+          className="text-pink-500 italic animate-pulse-glow"
+          style={{
+            filter: 'none',
+          }}
+        >
+          ~Kayla xoxo
+        </span>
+        <br />
+        <br />
+      </p>
+
+      {/* Kayla GIF */}
+      <img
+        src="/kayla.gif"
+        alt="Kayla gif"
+        className="w-64 h-auto rounded-lg drop-shadow-lg mt-2"
+      />
     </main>
   );
 }
+
 
 
