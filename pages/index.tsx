@@ -70,10 +70,17 @@ export default function Home() {
 
         // Avoid overlap (assume 1% ~ 8px on 800px screen, 64px spacing)
         const isOverlapping = images.some(img => {
-          const deltaX = Math.abs(parseFloat(img.left) - leftPercent);
-          const deltaY = Math.abs(parseFloat(img.top) - topPercent);
-          return deltaX < 8 && deltaY < 8;
-        });
+  const existingLeftPx = (parseFloat(img.left) / 100) * window.innerWidth;
+  const existingTopPx = (parseFloat(img.top) / 100) * window.innerHeight;
+  const newLeftPx = (leftPercent / 100) * window.innerWidth;
+  const newTopPx = (topPercent / 100) * window.innerHeight;
+
+  const dx = existingLeftPx - newLeftPx;
+  const dy = existingTopPx - newTopPx;
+  const distance = Math.sqrt(dx * dx + dy * dy);
+
+  return distance < 128; // 128px = image width/height
+});
 
         if (!isOverlapping) {
           newImage = {

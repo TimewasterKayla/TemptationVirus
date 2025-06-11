@@ -54,7 +54,7 @@ export default function Success() {
   💖Profile Updated!💖
 </h1>
 <p className="text-lg md:text-2xl text-white drop-shadow-strong-tight">
-  You look SOOOOO much CUTER NOW BABY!!
+  You look SOOOOO much CUTER NOW BABY!!😂
   <br />
   <br />
   <span
