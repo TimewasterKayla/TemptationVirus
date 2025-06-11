@@ -8,6 +8,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   const { oauth_token, oauth_verifier } = req.query;
   const oauth_token_secret = req.cookies.oauth_token_secret;
 
+  console.log("Cookies received:", req.cookies);
+  console.log("oauth_token_secret:", oauth_token_secret);
+
   try {
     const client = new TwitterApi({
       appKey: process.env.TWITTER_API_KEY!,

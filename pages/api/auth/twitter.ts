@@ -13,6 +13,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   );
 
   // Store token/secret in cookie/session in prod
-  res.setHeader("Set-Cookie", `oauth_token_secret=${oauth_token_secret}; Path=/; HttpOnly`);
+ // Set cookie with appropriate options
+res.setHeader("Set-Cookie", `oauth_token_secret=${oauth_token_secret}; HttpOnly; Path=/api/callback; Secure; SameSite=None`);
   res.redirect(url);
 }
