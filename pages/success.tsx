@@ -54,7 +54,7 @@ export default function Success() {
       </h1>
 
       <p className="text-lg md:text-2xl text-white drop-shadow-strong-tight">
-        You look SOOOOO much CUTER NOW BABY!!😂
+        You look SOOOOO much fk'n CUTER NOW BABY!!😂
         <br />
         <br />
         <span
@@ -80,7 +80,7 @@ export default function Success() {
         className="mt-6 bg-pink-500 text-white px-6 py-3 rounded-lg hover:bg-pink-600 transition-colors duration-200 font-semibold drop-shadow-md cursor-pointer"
         onClick={() => window.location.href = "https://youtube.com"}
       >
-        😵Still Feeling Stupid? c;😵
+        😵Still Feeling Stupid?😵
       </button>
     </main>
   );
