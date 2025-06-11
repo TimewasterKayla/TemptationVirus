@@ -17,8 +17,12 @@ module.exports = {
       },
       animation: {
         'float-heart': 'float 8s linear infinite',
-      }
+      },
+      dropShadow: {
+        'strong-tight': '0 2px 2px rgba(0, 0, 0, 0.7)', // new custom shadow
+      },
     },
   },
   plugins: [],
 };
+
