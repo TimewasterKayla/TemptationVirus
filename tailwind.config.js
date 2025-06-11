@@ -16,6 +16,14 @@ module.exports = {
           '50%': { opacity: 1 },
           '100%': { transform: 'translateY(-100vh)', opacity: 0 },
         },
+        pulseGlow: {
+          '0%, 100%': {
+            textShadow: '0 0 8px rgba(255, 255, 255, 0.9)',
+          },
+          '50%': {
+            textShadow: '0 0 16px rgba(255, 255, 255, 1)',
+          },
+        },
       },
       animation: {
         'float-heart': 'float 8s linear infinite',

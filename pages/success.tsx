@@ -57,7 +57,15 @@ export default function Success() {
   You look SOOOOO much CUTER NOW BABY!!
   <br />
   <br />
-  <span className="text-pink-300 italic glow-white">~Kayla xoxo</span>
+  <span
+    className="text-pink-300 italic animate-pulse-glow"
+    style={{
+      textShadow: '0 0 8px rgba(255, 255, 255, 0.9)',
+      filter: 'none', // neutralizes any inherited drop-shadow
+    }}
+  >
+    ~Kayla xoxo
+  </span>
 </p>
     </main>
   );
