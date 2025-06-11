@@ -11,15 +11,16 @@
     "@tailwindcss/postcss": "^4.1.8",
     "axios": "^1.4.0",
     "next": "13.4.5",
-    "postcss": "^8.5.4",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "tailwindcss": "^4.1.8",
     "twitter-api-v2": "^1.15.0"
   },
   "devDependencies": {
     "@types/node": "22.15.30",
     "@types/react": "19.1.6",
+    "autoprefixer": "^10.4.21",
+    "postcss": "^8.5.4",
+    "tailwindcss": "^4.1.8",
     "typescript": "^5.0.4"
   },
   "main": "index.js",
