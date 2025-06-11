@@ -1,3 +1,5 @@
+const plugin = require('tailwindcss/plugin');
+
 module.exports = {
   content: [
     './pages/**/*.{js,ts,jsx,tsx}',
@@ -24,18 +26,17 @@ module.exports = {
     },
   },
   plugins: [
-  function ({ addUtilities }) {
-    addUtilities({
-      '.glow-white': {
-        textShadow: '0 0 6px white',
-      },
-      '.no-drop-shadow': {
-        filter: 'none',
-        boxShadow: 'none',
-      },
-    });
-  },
-],
+    plugin(function ({ addUtilities }) {
+      addUtilities({
+        '.glow-white': {
+          textShadow: '0 0 8px rgba(255, 255, 255, 0.9)',
+        },
+        '.no-drop-shadow': {
+          filter: 'none',
+        },
+      });
+    }),
+  ],
 };
 
 
