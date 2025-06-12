@@ -80,13 +80,11 @@ export default function Page1() {
   useEffect(() => {
     if (textIndex >= textLines.length) return;
 
-    // First line delay: 1s, others 1s as well
     const delayBeforeShow = 1000;
 
     const show = setTimeout(() => setShowText(true), delayBeforeShow);
-    const hide = setTimeout(() => setShowText(false), delayBeforeShow + 5000); // show for 5s
-
-    const next = setTimeout(() => setTextIndex((prev) => prev + 1), delayBeforeShow + 6000); // total 6s per line including delay
+    const hide = setTimeout(() => setShowText(false), delayBeforeShow + 5000);
+    const next = setTimeout(() => setTextIndex((prev) => prev + 1), delayBeforeShow + 6000);
 
     return () => {
       clearTimeout(show);
@@ -114,7 +112,7 @@ export default function Page1() {
       {/* Centered Floating Text */}
       {textIndex < textLines.length && (
         <div
-          className={`absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-white text-3xl font-bold text-center px-6 transition-opacity duration-1000 drop-shadow-[0_0_15px_hotpink] sparkle-text ${
+          className={`absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-white text-3xl font-bold text-center px-6 transition-opacity duration-1000 drop-shadow-[0_0_15px_hotpink] sparkle-text whitespace-nowrap ${
             showText ? "opacity-100" : "opacity-0"
           }`}
           key={textIndex}
@@ -126,15 +124,14 @@ export default function Page1() {
       {/* Purple button after last line */}
       {textIndex >= textLines.length && (
         <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-20">
-          <button
-            onClick={() => {
-              window.location.href =
-                "https://www.paypal.com/sendmoney?recipient=BimboKayla&amount=10";
-            }}
-            className="bg-purple-700 hover:bg-purple-800 text-white font-bold py-3 px-8 rounded-lg drop-shadow-lg transition-colors duration-300"
+          <a
+            href="https://www.paypal.com/paypalme/BimboKayla/10"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="bg-purple-700 hover:bg-purple-800 text-white font-bold py-3 px-8 rounded-lg drop-shadow-lg transition-colors duration-300 cursor-pointer select-none"
           >
             ☠Doom Button☠
-          </button>
+          </a>
         </div>
       )}
 
@@ -161,10 +158,17 @@ export default function Page1() {
         .sparkle-text {
           animation: sparkle 2.5s ease-in-out infinite;
         }
+
+        @media (min-width: 768px) {
+          .sparkle-text {
+            font-size: 2.25rem;
+          }
+        }
       `}</style>
     </div>
   );
 }
+
 
 
 
