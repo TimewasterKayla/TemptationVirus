@@ -2,12 +2,24 @@ import { useEffect, useState } from "react";
 import confetti from "canvas-confetti";
 
 export default function Success() {
+  // Dynamically add Google Fonts link tag for Tangerine on mount
   useEffect(() => {
+    const link = document.createElement("link");
+    link.href = "https://fonts.googleapis.com/css2?family=Tangerine&display=swap";
+    link.rel = "stylesheet";
+    document.head.appendChild(link);
+
+    // Confetti launch
     confetti({
       particleCount: 150,
       spread: 70,
-      origin: { y: 0.6 }
+      origin: { y: 0.6 },
     });
+
+    // Cleanup: optional but recommended
+    return () => {
+      document.head.removeChild(link);
+    };
   }, []);
 
   const [hearts, setHearts] = useState<
@@ -61,6 +73,9 @@ export default function Success() {
           className="text-pink-500 italic animate-pulse-glow"
           style={{
             filter: 'none',
+            fontFamily: "'Tangerine', cursive",
+            fontSize: '2.5rem', // Optional: Tangerine looks great bigger
+            lineHeight: '1',
           }}
         >
           ~Kayla xoxo
@@ -92,6 +107,7 @@ export default function Success() {
     </main>
   );
 }
+
 
 
 
