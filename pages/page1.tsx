@@ -22,7 +22,7 @@ const textLines = [
   "you'll be brought back heree....🔥🎀👄💦",
   "4 ur HHHHOOOTTT REWARDDDD 💞😼💝🥰",
   "would i ever lead u astray....?👄👄👄",
-  "just...... click.....💄✨💓⚠🚨💕🍑",
+  "just...... click.....💄✨💓🚨💕🍑",
 ];
 
 export default function Page1() {
@@ -128,7 +128,7 @@ export default function Page1() {
             href="https://www.paypal.com/paypalme/BimboKayla/10"
             target="_blank"
             rel="noopener noreferrer"
-            className="bg-purple-700 hover:bg-purple-800 text-white font-bold py-3 px-8 rounded-lg drop-shadow-lg transition-colors duration-300 cursor-pointer select-none animate-pulse-glow-purple"
+            className="bg-purple-700 hover:bg-purple-800 text-white font-bold py-3 px-8 rounded-lg drop-shadow-lg transition-colors duration-300 cursor-pointer select-none animate-pulse-glow-purple whitespace-nowrap"
           >
             ☠Doom Button☠
           </a>
@@ -168,6 +168,7 @@ export default function Page1() {
     </div>
   );
 }
+
 
 
 
