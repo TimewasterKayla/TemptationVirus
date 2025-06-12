@@ -40,10 +40,10 @@ module.exports = {
         },
         pulseGlowPink: {
           '0%, 100%': {
-            boxShadow: '0 0 0px rgba(255, 105, 180, 0.4)',
+            boxShadow: '0 0 0px rgba(255, 20, 147, 0.5)',
           },
           '50%': {
-            boxShadow: '0 0 15px rgba(255, 105, 180, 0.8)',
+            boxShadow: '0 0 15px rgba(255, 20, 147, 0.9)',
           },
         },
       },
