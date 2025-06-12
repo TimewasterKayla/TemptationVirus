@@ -7,6 +7,9 @@ module.exports = {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        tangerine: ['"Tangerine"', 'cursive'],
+      },
       backgroundImage: {
         hearts: "url('/backgrounds/backgroundhearts.jpg')",
       },
