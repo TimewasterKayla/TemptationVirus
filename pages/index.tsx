@@ -18,6 +18,7 @@ export default function Home() {
 
   const [images, setImages] = useState<ImageItem[]>([]);
   const [nextId, setNextId] = useState(0);
+  const [lastFilenames, setLastFilenames] = useState<string[]>([]); // Track last 5 filenames
 
   useEffect(() => {
     const emojiSet = ["✨", "🌺", "🌼", "🔥", "💦", "💋"];
@@ -50,6 +51,15 @@ export default function Home() {
         const res = await fetch("/api/profile-images");
         const data = await res.json();
         filename = data.filename;
+
+        // Avoid last 5 filenames
+        let attempts = 0;
+        while (lastFilenames.includes(filename) && attempts < 10) {
+          const retryRes = await fetch("/api/profile-images");
+          const retryData = await retryRes.json();
+          filename = retryData.filename;
+          attempts++;
+        }
       } catch {
         console.error("Failed to fetch image from API");
         return;
@@ -59,7 +69,6 @@ export default function Home() {
         const topPercent = Math.random() * 90;
         const leftPercent = Math.random() * 90;
 
-        // Skip center area (35%-65%)
         if (
           topPercent >= 35 && topPercent <= 65 &&
           leftPercent >= 35 && leftPercent <= 65
@@ -68,19 +77,18 @@ export default function Home() {
           continue;
         }
 
-        // Avoid overlap (assume 1% ~ 8px on 800px screen, 64px spacing)
         const isOverlapping = images.some(img => {
-  const existingLeftPx = (parseFloat(img.left) / 100) * window.innerWidth;
-  const existingTopPx = (parseFloat(img.top) / 100) * window.innerHeight;
-  const newLeftPx = (leftPercent / 100) * window.innerWidth;
-  const newTopPx = (topPercent / 100) * window.innerHeight;
+          const existingLeftPx = (parseFloat(img.left) / 100) * window.innerWidth;
+          const existingTopPx = (parseFloat(img.top) / 100) * window.innerHeight;
+          const newLeftPx = (leftPercent / 100) * window.innerWidth;
+          const newTopPx = (topPercent / 100) * window.innerHeight;
 
-  const dx = existingLeftPx - newLeftPx;
-  const dy = existingTopPx - newTopPx;
-  const distance = Math.sqrt(dx * dx + dy * dy);
+          const dx = existingLeftPx - newLeftPx;
+          const dy = existingTopPx - newTopPx;
+          const distance = Math.sqrt(dx * dx + dy * dy);
 
-  return distance < 128; // 128px = image width/height
-});
+          return distance < 128;
+        });
 
         if (!isOverlapping) {
           newImage = {
@@ -95,26 +103,31 @@ export default function Home() {
         tries++;
       }
 
-      if (newImage) {
+      if (newImage && filename) {
         setImages(prev => [...prev, newImage]);
         setNextId(prev => prev + 1);
 
+        // Update last filenames, keeping only the last 5
+        setLastFilenames(prev => {
+          const updated = [filename!, ...prev];
+          return updated.slice(0, 5);
+        });
+
         setTimeout(() => {
           setImages(prev => prev.filter(img => img.id !== newImage!.id));
-        }, 8000); // 4s fade in + 4s fade out
+        }, 8000);
       }
     };
 
     const interval = setInterval(() => {
       spawnImage();
-    }, 2000); // Spawn every 2s
+    }, 2000);
 
     return () => clearInterval(interval);
-  }, [nextId, images]);
+  }, [nextId, images, lastFilenames]);
 
   return (
     <main className="relative flex flex-col items-center justify-center min-h-screen p-6 text-center bg-[url('/backgrounds/backgroundhearts.jpg')] bg-cover bg-center overflow-hidden">
-
       {/* Floating Emojis */}
       {emojis.map((item) => (
         <div
@@ -152,3 +165,4 @@ export default function Home() {
     </main>
   );
 }
+
