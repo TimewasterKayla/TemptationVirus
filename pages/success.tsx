@@ -66,7 +66,6 @@ export default function Success() {
           ~Kayla xoxo
         </span>
         <br />
-        <br />
       </p>
       
 {/* Buttons Row Below GIF */}
@@ -81,7 +80,7 @@ export default function Success() {
     💄Sexy Button💄
   </button>
   <button
-    className="bg-red-700 text-white px-4 py-2 rounded-lg hover:bg-red-800 transition-colors duration-200 font-semibold drop-shadow-md cursor-pointer"
+    className="bg-red-700 text-white px-4 py-2 rounded-lg hover:bg-red-800 transition-colors duration-200 font-semibold drop-shadow-md cursor-pointer animate-pulse-glow-red"
     onClick={() => (window.location.href = "/page1")}
   >
     ⚠Risky Button⚠

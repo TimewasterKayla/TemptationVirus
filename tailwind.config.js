@@ -30,14 +30,24 @@ module.exports = {
           '75%': { opacity: '0.8' },
           '100%': { opacity: '0' },
         },
+        pulseGlowRed: {
+          '0%, 100%': {
+            boxShadow: '0 0 0px rgba(255, 0, 0, 0.5)',
+          },
+          '50%': {
+            boxShadow: '0 0 15px rgba(255, 0, 0, 0.9)',
+          },
+        },
       },
       animation: {
         'float-heart': 'float 8s linear infinite',
         'fade-in-out': 'fadeInOut 8s ease-in-out infinite',
         'pulse-glow': 'pulseGlow 2s ease-in-out infinite',
+        'pulse-glow-red': 'pulseGlowRed 1.5s ease-in-out infinite',
       },
       dropShadow: {
         'strong-tight': '0 2px 2px rgba(0, 0, 0, 0.7)',
+        'glow-red': '0 0 10px rgba(255, 0, 0, 0.8), 0 0 20px rgba(255, 0, 0, 0.6)',
       },
     },
   },
@@ -54,5 +64,6 @@ module.exports = {
     }),
   ],
 };
+
 
 
