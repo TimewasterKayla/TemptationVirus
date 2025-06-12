@@ -1,3 +1,5 @@
+// pages/page1.tsx
+
 import { useEffect, useRef, useState } from "react";
 
 const videoList = [
@@ -26,7 +28,7 @@ const textLines = [
 export default function Page1() {
   const [current, setCurrent] = useState(0);
   const [active, setActive] = useState(true);
-  const [textIndex, setTextIndex] = useState(-1); // start at -1 for initial delay
+  const [textIndex, setTextIndex] = useState(0);
   const [showText, setShowText] = useState(false);
 
   const videoRef1 = useRef<HTMLVideoElement>(null);
@@ -75,19 +77,16 @@ export default function Page1() {
     };
   }, [current, active]);
 
-  // Text timing effect with initial 2s delay before first line
   useEffect(() => {
     if (textIndex >= textLines.length) return;
 
-    if (textIndex === -1) {
-      // initial 2s delay before first line
-      const initialDelay = setTimeout(() => setTextIndex(0), 2000);
-      return () => clearTimeout(initialDelay);
-    }
+    // First line delay: 1s, others 1s as well
+    const delayBeforeShow = 1000;
 
-    const show = setTimeout(() => setShowText(true), 0); // show immediately when index changes
-    const hide = setTimeout(() => setShowText(false), 5000); // hide after 5s
-    const next = setTimeout(() => setTextIndex((prev) => prev + 1), 6000); // total 6s per line
+    const show = setTimeout(() => setShowText(true), delayBeforeShow);
+    const hide = setTimeout(() => setShowText(false), delayBeforeShow + 5000); // show for 5s
+
+    const next = setTimeout(() => setTextIndex((prev) => prev + 1), delayBeforeShow + 6000); // total 6s per line including delay
 
     return () => {
       clearTimeout(show);
@@ -95,18 +94,6 @@ export default function Page1() {
       clearTimeout(next);
     };
   }, [textIndex]);
-
-  const handleDoomClick = () => {
-    // PayPal send money to @BimboKayla, $10 preset
-    // PayPal.me link with amount: https://paypal.me/username/amount
-    // Unfortunately paypal.me doesn't support usernames with @ symbol, so fallback to paypal.com send screen URL:
-    const paypalUrl = "https://www.paypal.com/paypalme/BimboKayla/10";
-    // If paypal.me doesn't work because of username, fallback to send money link:
-    // https://www.paypal.com/sendmoney?recipient=... (but that is not a public documented URL)
-    // So safest is paypal.me link
-
-    window.location.href = paypalUrl;
-  };
 
   return (
     <div className="relative w-full h-screen overflow-hidden bg-black">
@@ -125,62 +112,54 @@ export default function Page1() {
       />
 
       {/* Centered Floating Text */}
-      {textIndex >= 0 && textIndex < textLines.length && (
+      {textIndex < textLines.length && (
         <div
-          className={`absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2
-            text-white font-bold text-center px-6 transition-opacity duration-1000
-            ${
-              showText ? "opacity-100" : "opacity-0"
-            }
-            drop-shadow-[0_0_8px_hotpink]
-            sparkle-text
-            text-6xl md:text-[7rem] leading-tight
-            `}
-          style={{ whiteSpace: "pre-wrap" }}
+          className={`absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-white text-3xl font-bold text-center px-6 transition-opacity duration-1000 drop-shadow-[0_0_15px_hotpink] sparkle-text ${
+            showText ? "opacity-100" : "opacity-0"
+          }`}
+          key={textIndex}
         >
           {textLines[textIndex]}
         </div>
       )}
 
-      {/* Doom Button after last text */}
+      {/* Purple button after last line */}
       {textIndex >= textLines.length && (
-        <button
-          onClick={handleDoomClick}
-          className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2
-            bg-purple-700 hover:bg-purple-900 transition-colors duration-300
-            text-white font-extrabold text-5xl md:text-[8rem] px-12 py-6 rounded-lg drop-shadow-lg"
-          aria-label="Doom Button"
-          type="button"
-        >
-          ☠Doom Button☠
-        </button>
+        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-20">
+          <button
+            onClick={() => {
+              window.location.href =
+                "https://www.paypal.com/sendmoney?recipient=BimboKayla&amount=10";
+            }}
+            className="bg-purple-700 hover:bg-purple-800 text-white font-bold py-3 px-8 rounded-lg drop-shadow-lg transition-colors duration-300"
+          >
+            ☠Doom Button☠
+          </button>
+        </div>
       )}
 
-      {/* Optional fallback content */}
-      <div className="relative z-10 flex items-center justify-center h-full text-white pointer-events-none" />
       <style jsx>{`
-        /* Sparkle animation for text */
         @keyframes sparkle {
-          0%, 100% {
+          0%,
+          100% {
             text-shadow:
               0 0 2px hotpink,
-              0 0 10px hotpink,
-              0 0 20px #ff69b4,
-              0 0 30px #ff69b4,
-              0 0 40px #ff1493;
+              0 0 4px hotpink,
+              0 0 6px hotpink,
+              0 0 8px #ff69b4,
+              0 0 10px #ff69b4;
           }
           50% {
             text-shadow:
-              0 0 3px #ff1493,
-              0 0 15px hotpink,
-              0 0 25px #ff69b4,
-              0 0 35px #ff1493,
-              0 0 45px #ff69b4;
+              0 0 6px hotpink,
+              0 0 10px hotpink,
+              0 0 14px hotpink,
+              0 0 18px #ff69b4,
+              0 0 22px #ff69b4;
           }
         }
-
         .sparkle-text {
-          animation: sparkle 2s ease-in-out infinite alternate;
+          animation: sparkle 2.5s ease-in-out infinite;
         }
       `}</style>
     </div>
