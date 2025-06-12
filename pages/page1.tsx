@@ -112,7 +112,7 @@ export default function Page1() {
       {/* Centered Floating Text */}
       {textIndex < textLines.length && (
         <div
-          className={`absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-white text-3xl font-bold text-center px-6 transition-opacity duration-1000 drop-shadow-[0_0_15px_hotpink] sparkle-text whitespace-nowrap ${
+          className={`absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-white text-3xl font-bold text-center px-6 transition-opacity duration-1000 drop-shadow-[0_0_15px_hotpink] sparkle-text max-w-[90vw] whitespace-normal break-words ${
             showText ? "opacity-100" : "opacity-0"
           }`}
           key={textIndex}
@@ -121,14 +121,14 @@ export default function Page1() {
         </div>
       )}
 
-      {/* Purple button after last line */}
+      {/* Purple Doom Button after last line */}
       {textIndex >= textLines.length && (
         <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-20">
           <a
             href="https://www.paypal.com/paypalme/BimboKayla/10"
             target="_blank"
             rel="noopener noreferrer"
-            className="bg-purple-700 hover:bg-purple-800 text-white font-bold py-3 px-8 rounded-lg drop-shadow-lg transition-colors duration-300 cursor-pointer select-none"
+            className="bg-purple-700 hover:bg-purple-800 text-white font-bold py-3 px-8 rounded-lg drop-shadow-lg transition-colors duration-300 cursor-pointer select-none animate-pulse-glow-purple"
           >
             ☠Doom Button☠
           </a>
@@ -168,6 +168,7 @@ export default function Page1() {
     </div>
   );
 }
+
 
 
 
