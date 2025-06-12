@@ -5,7 +5,9 @@ export default function Document() {
   return (
     <Html lang="en">
       <Head>
-        {/* Google Fonts - Tangerine */}
+        {/* Optimize font loading for Google Fonts - Tangerine */}
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link
           href="https://fonts.googleapis.com/css2?family=Tangerine&display=swap"
           rel="stylesheet"
@@ -18,3 +20,5 @@ export default function Document() {
     </Html>
   );
 }
+
+
