@@ -13,10 +13,10 @@ const videoList = [
 
 export default function Page1() {
   const [current, setCurrent] = useState(0);
-  const [active, setActive] = useState(true); // which video element is currently visible
+  const [active, setActive] = useState(true); // which video is on top
   const videoRef1 = useRef<HTMLVideoElement>(null);
   const videoRef2 = useRef<HTMLVideoElement>(null);
-  const hasQueuedNext = useRef(false); // to prevent multiple triggers
+  const hasQueuedNext = useRef(false);
 
   useEffect(() => {
     const currentVideo = active ? videoRef1.current : videoRef2.current;
@@ -27,29 +27,30 @@ export default function Page1() {
     currentVideo.src = videoList[current];
     currentVideo.play();
     currentVideo.style.opacity = "1";
-    nextVideo.style.opacity = "0";
 
     const handleTimeUpdate = () => {
-      if (
-        !hasQueuedNext.current &&
-        currentVideo.duration - currentVideo.currentTime <= 1
-      ) {
+      const remaining = currentVideo.duration - currentVideo.currentTime;
+      if (!hasQueuedNext.current && remaining <= 1) {
         hasQueuedNext.current = true;
 
         const nextIndex = (current + 1) % videoList.length;
         nextVideo.src = videoList[nextIndex];
         nextVideo.load();
-        nextVideo.play();
 
-        // Start crossfade
-        nextVideo.style.opacity = "1";
-        currentVideo.style.opacity = "0";
+        const onNextCanPlay = () => {
+          nextVideo.play();
+          nextVideo.style.opacity = "1";
 
-        // After the fade, update state
-        setTimeout(() => {
-          setCurrent(nextIndex);
-          setActive(!active);
-        }, 500); // wait for crossfade duration
+          // Wait for fade in, then fade out old one
+          setTimeout(() => {
+            currentVideo.style.opacity = "0";
+            setCurrent(nextIndex);
+            setActive(!active);
+          }, 400); // match your transition duration
+          nextVideo.removeEventListener("canplay", onNextCanPlay);
+        };
+
+        nextVideo.addEventListener("canplay", onNextCanPlay);
       }
     };
 
@@ -61,7 +62,6 @@ export default function Page1() {
 
   return (
     <div className="relative w-full h-screen overflow-hidden bg-black">
-      {/* Two video elements that swap */}
       <video
         ref={videoRef1}
         muted
@@ -75,13 +75,13 @@ export default function Page1() {
         className="absolute top-0 left-0 w-full h-full object-cover transition-opacity duration-500 opacity-0"
       />
 
-      {/* Page content */}
       <div className="relative z-10 flex items-center justify-center h-full text-white">
         <h1 className="text-4xl font-bold drop-shadow-lg">Welcome to Page 1!</h1>
       </div>
     </div>
   );
 }
+
 
 
 
