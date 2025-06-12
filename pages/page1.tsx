@@ -1,3 +1,5 @@
+// pages/page1.tsx
+
 import { useEffect, useRef, useState } from "react";
 
 const videoList = [
@@ -10,81 +12,76 @@ const videoList = [
 ];
 
 export default function Page1() {
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [isAActive, setIsAActive] = useState(true);
-  const [isTransitioning, setIsTransitioning] = useState(false);
-
-  const videoRefA = useRef<HTMLVideoElement>(null);
-  const videoRefB = useRef<HTMLVideoElement>(null);
-
-  const getActiveRef = () => (isAActive ? videoRefA : videoRefB);
-  const getNextRef = () => (isAActive ? videoRefB : videoRefA);
+  const [current, setCurrent] = useState(0);
+  const [active, setActive] = useState(true); // which video element is currently visible
+  const videoRef1 = useRef<HTMLVideoElement>(null);
+  const videoRef2 = useRef<HTMLVideoElement>(null);
+  const hasQueuedNext = useRef(false); // to prevent multiple triggers
 
   useEffect(() => {
-    const activeRef = getActiveRef();
-    const handleEnded = () => {
-      const nextIndex = (currentIndex + 1) % videoList.length;
-      const nextRef = getNextRef().current;
-      if (!nextRef) return;
+    const currentVideo = active ? videoRef1.current : videoRef2.current;
+    const nextVideo = active ? videoRef2.current : videoRef1.current;
+    if (!currentVideo || !nextVideo) return;
 
-      nextRef.src = videoList[nextIndex];
-      nextRef.load();
+    hasQueuedNext.current = false;
+    currentVideo.src = videoList[current];
+    currentVideo.play();
+    currentVideo.style.opacity = "1";
+    nextVideo.style.opacity = "0";
 
-      const handleReady = () => {
-        nextRef.removeEventListener("canplay", handleReady);
-        nextRef.play().catch(() => {});
-        setIsTransitioning(true);
+    const handleTimeUpdate = () => {
+      if (
+        !hasQueuedNext.current &&
+        currentVideo.duration - currentVideo.currentTime <= 1
+      ) {
+        hasQueuedNext.current = true;
 
+        const nextIndex = (current + 1) % videoList.length;
+        nextVideo.src = videoList[nextIndex];
+        nextVideo.load();
+        nextVideo.play();
+
+        // Start crossfade
+        nextVideo.style.opacity = "1";
+        currentVideo.style.opacity = "0";
+
+        // After the fade, update state
         setTimeout(() => {
-          setCurrentIndex(nextIndex);
-          setIsAActive((prev) => !prev);
-          setIsTransitioning(false);
-        }, 500); // match fade duration
-      };
-
-      nextRef.addEventListener("canplay", handleReady);
+          setCurrent(nextIndex);
+          setActive(!active);
+        }, 500); // wait for crossfade duration
+      }
     };
 
-    const video = activeRef.current;
-    if (video) {
-      video.src = videoList[currentIndex];
-      video.load();
-      video.play().catch(() => {});
-      video.addEventListener("ended", handleEnded);
-    }
-
+    currentVideo.addEventListener("timeupdate", handleTimeUpdate);
     return () => {
-      if (video) video.removeEventListener("ended", handleEnded);
+      currentVideo.removeEventListener("timeupdate", handleTimeUpdate);
     };
-  }, [currentIndex, isAActive]);
+  }, [current, active]);
 
   return (
-    <div className="relative w-full h-screen overflow-hidden flex items-center justify-center text-white">
-      {/* Video A */}
+    <div className="relative w-full h-screen overflow-hidden bg-black">
+      {/* Two video elements that swap */}
       <video
-        ref={videoRefA}
+        ref={videoRef1}
         muted
         playsInline
-        className={`absolute top-0 left-0 w-full h-full object-cover transition-opacity duration-500 ${
-          isAActive ? "opacity-100 z-10" : "opacity-0 z-0"
-        } ${isTransitioning ? "pointer-events-none" : ""}`}
+        className="absolute top-0 left-0 w-full h-full object-cover transition-opacity duration-500 opacity-0"
       />
-      {/* Video B */}
       <video
-        ref={videoRefB}
+        ref={videoRef2}
         muted
         playsInline
-        className={`absolute top-0 left-0 w-full h-full object-cover transition-opacity duration-500 ${
-          !isAActive ? "opacity-100 z-10" : "opacity-0 z-0"
-        } ${isTransitioning ? "pointer-events-none" : ""}`}
+        className="absolute top-0 left-0 w-full h-full object-cover transition-opacity duration-500 opacity-0"
       />
 
-      {/* Overlay content */}
-      <h1 className="text-4xl md:text-6xl font-bold drop-shadow-lg z-20 pointer-events-none">
-        Welcome to Page 1!
-      </h1>
+      {/* Page content */}
+      <div className="relative z-10 flex items-center justify-center h-full text-white">
+        <h1 className="text-4xl font-bold drop-shadow-lg">Welcome to Page 1!</h1>
+      </div>
     </div>
   );
 }
+
 
 
