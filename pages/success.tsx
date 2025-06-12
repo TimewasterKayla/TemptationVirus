@@ -74,7 +74,7 @@ export default function Success() {
           style={{
             filter: 'none',
             fontFamily: "'Tangerine', cursive",
-            fontSize: '2.5rem', // Optional: Tangerine looks great bigger
+            fontSize: '2.5rem', // Tangerine looks great bigger
             lineHeight: '1',
           }}
         >
@@ -82,7 +82,7 @@ export default function Success() {
         </span>
         <br />
       </p>
-      
+
       {/* Buttons Row Below GIF */}
       <div className="mt-6 flex justify-center gap-4">
         <a
@@ -107,6 +107,7 @@ export default function Success() {
     </main>
   );
 }
+
 
 
 
