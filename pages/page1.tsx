@@ -10,77 +10,81 @@ const videoList = [
 ];
 
 export default function Page1() {
-  const [currentVideoIndex, setCurrentVideoIndex] = useState(0);
+  const [currentIndex, setCurrentIndex] = useState(0);
   const [isAActive, setIsAActive] = useState(true);
+  const [isTransitioning, setIsTransitioning] = useState(false);
 
   const videoRefA = useRef<HTMLVideoElement>(null);
   const videoRefB = useRef<HTMLVideoElement>(null);
 
-  const nextIndex = (currentVideoIndex + 1) % videoList.length;
+  const getActiveRef = () => (isAActive ? videoRefA : videoRefB);
+  const getNextRef = () => (isAActive ? videoRefB : videoRefA);
 
   useEffect(() => {
-    const activeRef = isAActive ? videoRefA : videoRefB;
-    const nextRef = isAActive ? videoRefB : videoRefA;
-
+    const activeRef = getActiveRef();
     const handleEnded = () => {
-      // Load next video in background ref
-      if (nextRef.current) {
-        nextRef.current.src = videoList[nextIndex];
-        nextRef.current.load();
-        nextRef.current.play().catch(() => {});
-      }
+      const nextIndex = (currentIndex + 1) % videoList.length;
+      const nextRef = getNextRef().current;
+      if (!nextRef) return;
 
-      // After short delay, switch visibility
-      setTimeout(() => {
-        setCurrentVideoIndex(nextIndex);
-        setIsAActive((prev) => !prev);
-      }, 100); // short buffer to avoid flash
+      nextRef.src = videoList[nextIndex];
+      nextRef.load();
+
+      const handleReady = () => {
+        nextRef.removeEventListener("canplay", handleReady);
+        nextRef.play().catch(() => {});
+        setIsTransitioning(true);
+
+        setTimeout(() => {
+          setCurrentIndex(nextIndex);
+          setIsAActive((prev) => !prev);
+          setIsTransitioning(false);
+        }, 500); // match fade duration
+      };
+
+      nextRef.addEventListener("canplay", handleReady);
     };
 
-    const activeVideo = activeRef.current;
-    if (activeVideo) {
-      activeVideo.src = videoList[currentVideoIndex];
-      activeVideo.load();
-      activeVideo.play().catch(() => {});
-      activeVideo.addEventListener("ended", handleEnded);
+    const video = activeRef.current;
+    if (video) {
+      video.src = videoList[currentIndex];
+      video.load();
+      video.play().catch(() => {});
+      video.addEventListener("ended", handleEnded);
     }
 
     return () => {
-      if (activeVideo) {
-        activeVideo.removeEventListener("ended", handleEnded);
-      }
+      if (video) video.removeEventListener("ended", handleEnded);
     };
-  }, [currentVideoIndex, isAActive]);
+  }, [currentIndex, isAActive]);
 
   return (
-    <div className="relative min-h-screen w-full flex items-center justify-center text-white">
+    <div className="relative w-full h-screen overflow-hidden flex items-center justify-center text-white">
       {/* Video A */}
       <video
         ref={videoRefA}
-        className={`absolute top-0 left-0 w-full h-full object-cover transition-opacity duration-1000 ${
-          isAActive ? "opacity-100 z-0" : "opacity-0 -z-10"
-        }`}
-        autoPlay
         muted
         playsInline
+        className={`absolute top-0 left-0 w-full h-full object-cover transition-opacity duration-500 ${
+          isAActive ? "opacity-100 z-10" : "opacity-0 z-0"
+        } ${isTransitioning ? "pointer-events-none" : ""}`}
       />
-
       {/* Video B */}
       <video
         ref={videoRefB}
-        className={`absolute top-0 left-0 w-full h-full object-cover transition-opacity duration-1000 ${
-          !isAActive ? "opacity-100 z-0" : "opacity-0 -z-10"
-        }`}
-        autoPlay
         muted
         playsInline
+        className={`absolute top-0 left-0 w-full h-full object-cover transition-opacity duration-500 ${
+          !isAActive ? "opacity-100 z-10" : "opacity-0 z-0"
+        } ${isTransitioning ? "pointer-events-none" : ""}`}
       />
 
       {/* Overlay content */}
-      <h1 className="text-4xl md:text-6xl font-bold drop-shadow-lg z-10">
+      <h1 className="text-4xl md:text-6xl font-bold drop-shadow-lg z-20 pointer-events-none">
         Welcome to Page 1!
       </h1>
     </div>
   );
 }
+
 
