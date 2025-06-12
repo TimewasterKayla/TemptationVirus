@@ -1,5 +1,3 @@
-// pages/page1.tsx
-
 import { useEffect, useRef, useState } from "react";
 
 const videoList = [
@@ -12,44 +10,67 @@ const videoList = [
 ];
 
 export default function Page1() {
-  const videoRef = useRef<HTMLVideoElement>(null);
   const [currentVideoIndex, setCurrentVideoIndex] = useState(0);
+  const [isAActive, setIsAActive] = useState(true);
+
+  const videoRefA = useRef<HTMLVideoElement>(null);
+  const videoRefB = useRef<HTMLVideoElement>(null);
+
+  const nextIndex = (currentVideoIndex + 1) % videoList.length;
 
   useEffect(() => {
-    const video = videoRef.current;
-    if (!video) return;
+    const activeRef = isAActive ? videoRefA : videoRefB;
+    const nextRef = isAActive ? videoRefB : videoRefA;
 
-    // When the current video ends, go to the next
     const handleEnded = () => {
-      setCurrentVideoIndex((prevIndex) => (prevIndex + 1) % videoList.length);
+      // Load next video in background ref
+      if (nextRef.current) {
+        nextRef.current.src = videoList[nextIndex];
+        nextRef.current.load();
+        nextRef.current.play().catch(() => {});
+      }
+
+      // After short delay, switch visibility
+      setTimeout(() => {
+        setCurrentVideoIndex(nextIndex);
+        setIsAActive((prev) => !prev);
+      }, 100); // short buffer to avoid flash
     };
 
-    video.addEventListener("ended", handleEnded);
+    const activeVideo = activeRef.current;
+    if (activeVideo) {
+      activeVideo.src = videoList[currentVideoIndex];
+      activeVideo.load();
+      activeVideo.play().catch(() => {});
+      activeVideo.addEventListener("ended", handleEnded);
+    }
 
     return () => {
-      video.removeEventListener("ended", handleEnded);
+      if (activeVideo) {
+        activeVideo.removeEventListener("ended", handleEnded);
+      }
     };
-  }, []);
-
-  useEffect(() => {
-    // Update the video source and play it
-    const video = videoRef.current;
-    if (video) {
-      video.src = videoList[currentVideoIndex];
-      video.load();
-      video.play().catch((err) => {
-        // Prevent autoplay errors (e.g., if not user-interacted yet)
-        console.warn("Autoplay failed", err);
-      });
-    }
-  }, [currentVideoIndex]);
+  }, [currentVideoIndex, isAActive]);
 
   return (
     <div className="relative min-h-screen w-full flex items-center justify-center text-white">
-      {/* Video background */}
+      {/* Video A */}
       <video
-        ref={videoRef}
-        className="absolute top-0 left-0 w-full h-full object-cover -z-10"
+        ref={videoRefA}
+        className={`absolute top-0 left-0 w-full h-full object-cover transition-opacity duration-1000 ${
+          isAActive ? "opacity-100 z-0" : "opacity-0 -z-10"
+        }`}
+        autoPlay
+        muted
+        playsInline
+      />
+
+      {/* Video B */}
+      <video
+        ref={videoRefB}
+        className={`absolute top-0 left-0 w-full h-full object-cover transition-opacity duration-1000 ${
+          !isAActive ? "opacity-100 z-0" : "opacity-0 -z-10"
+        }`}
         autoPlay
         muted
         playsInline
