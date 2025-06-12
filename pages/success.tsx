@@ -54,7 +54,7 @@ export default function Success() {
       </h1>
 
       <p className="text-lg md:text-2xl text-white drop-shadow-strong-tight">
-        You look SOOOOO much fk'n CUTER NOW BABY!!😂Here's some more CLICKY buttonz 2 play w/ DUMMY!🥰😍
+        You look SOOOOO much fk'n CUTER NOW BABY!!<br />😂Here's some more CLICKY buttonz 2 play w/ DUMMY!🥰😍
         <br />
         <br />
         <span
@@ -86,6 +86,10 @@ export default function Success() {
   >
     ⚠Risky Button⚠
   </button>
+</div>
+{/* GIF Below Buttons */}
+<div className="mt-6 flex justify-center">
+  <img src="/kayla.gif" alt="Kayla GIF" className="max-w-full h-auto rounded-lg shadow-lg" />
 </div>
     </main>
   );
