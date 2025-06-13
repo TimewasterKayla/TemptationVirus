@@ -1,6 +1,6 @@
 // pages/success.tsx
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import confetti from "canvas-confetti";
 
 export default function Success() {
@@ -27,6 +27,8 @@ export default function Success() {
     { id: number; left: string; delay: string; size: string; emoji: string; color: string }[]
   >([]);
 
+  const audioRef = useRef<HTMLAudioElement>(null);
+
   useEffect(() => {
     const generateHearts = () => {
       const heartEmojis = ['💖', '💗', '💘', '💕', '💞'];
@@ -46,13 +48,33 @@ export default function Success() {
     setHearts(generateHearts());
   }, []);
 
+  // Autoplay audio on mount
+  useEffect(() => {
+    const audio = audioRef.current;
+    if (!audio) return;
+
+    audio.volume = 0.8; // Optional: set volume to a reasonable level
+    audio.play().catch((e) => {
+      console.warn("Autoplay failed or was blocked", e);
+    });
+  }, []);
+
   const handleRiskyClick = () => {
+    // Stop audio playback
+    if (audioRef.current) {
+      audioRef.current.pause();
+      audioRef.current.currentTime = 0;
+    }
+
     sessionStorage.setItem("playAudio", "true");
     window.open("/page1", "_blank");
   };
 
   return (
     <main className="relative flex flex-col items-center justify-center min-h-screen p-6 text-center bg-[url('/backgrounds/backgroundhearts.jpg')] bg-cover bg-center overflow-hidden">
+      {/* Audio */}
+      <audio ref={audioRef} src="/prettylittlebaby.mp3" loop />
+
       {/* Floating Hearts */}
       {hearts.map((heart) => (
         <div
@@ -72,16 +94,18 @@ export default function Success() {
       </h1>
 
       <p className="text-lg md:text-2xl text-white drop-shadow-strong-tight">
-        You look SOOOOO much fk'n CUTER NOW BABY!!😂<br />Here's some more CLICKY buttonz 2 play w/ DUMMY!🥰😍
+        You look SOOOOO much fk'n CUTER NOW BABY!!😂
+        <br />
+        Here's some more CLICKY buttonz 2 play w/ DUMMY!🥰😍
         <br />
         <br />
         <span
           className="text-pink-500 italic animate-pulse-glow"
           style={{
-            filter: 'none',
+            filter: "none",
             fontFamily: "'Tangerine', cursive",
-            fontSize: '2.5rem',
-            lineHeight: '1',
+            fontSize: "2.5rem",
+            lineHeight: "1",
           }}
         >
           ~Kayla xoxo

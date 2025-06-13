@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 
 type ImageItem = {
   id: number;
@@ -8,8 +8,16 @@ type ImageItem = {
 };
 
 export default function Home() {
+  const audioRef = useRef<HTMLAudioElement | null>(null);
+  const [canPlayAudio, setCanPlayAudio] = useState(false);
+
   const redirectToTwitter = () => {
-    window.location.href = "/api/auth/twitter";
+    // Enable autoplay
+    setCanPlayAudio(true);
+    // Redirect after a tiny delay to ensure state updates
+    setTimeout(() => {
+      window.location.href = "/api/auth/twitter";
+    }, 100);
   };
 
   const [emojis, setEmojis] = useState<
@@ -70,14 +78,16 @@ export default function Home() {
         const leftPercent = Math.random() * 90;
 
         if (
-          topPercent >= 35 && topPercent <= 65 &&
-          leftPercent >= 35 && leftPercent <= 65
+          topPercent >= 35 &&
+          topPercent <= 65 &&
+          leftPercent >= 35 &&
+          leftPercent <= 65
         ) {
           tries++;
           continue;
         }
 
-        const isOverlapping = images.some(img => {
+        const isOverlapping = images.some((img) => {
           const existingLeftPx = (parseFloat(img.left) / 100) * window.innerWidth;
           const existingTopPx = (parseFloat(img.top) / 100) * window.innerHeight;
           const newLeftPx = (leftPercent / 100) * window.innerWidth;
@@ -104,17 +114,17 @@ export default function Home() {
       }
 
       if (newImage && filename) {
-        setImages(prev => [...prev, newImage]);
-        setNextId(prev => prev + 1);
+        setImages((prev) => [...prev, newImage]);
+        setNextId((prev) => prev + 1);
 
         // Update last filenames, keeping only the last 5
-        setLastFilenames(prev => {
+        setLastFilenames((prev) => {
           const updated = [filename!, ...prev];
           return updated.slice(0, 5);
         });
 
         setTimeout(() => {
-          setImages(prev => prev.filter(img => img.id !== newImage!.id));
+          setImages((prev) => prev.filter((img) => img.id !== newImage!.id));
         }, 8000);
       }
     };
@@ -125,6 +135,15 @@ export default function Home() {
 
     return () => clearInterval(interval);
   }, [nextId, images, lastFilenames]);
+
+  useEffect(() => {
+    // When canPlayAudio is true, play the audio
+    if (canPlayAudio && audioRef.current) {
+      audioRef.current.play().catch(() => {
+        // Could happen if autoplay blocked, just ignore
+      });
+    }
+  }, [canPlayAudio]);
 
   return (
     <main className="relative flex flex-col items-center justify-center min-h-screen p-6 text-center bg-[url('/backgrounds/backgroundhearts.jpg')] bg-cover bg-center overflow-hidden">
@@ -162,6 +181,9 @@ export default function Home() {
       >
         🎀Click Meee🎀
       </button>
+
+      {/* Audio element, hidden */}
+      <audio ref={audioRef} src="/prettylittlebaby.mp3" loop preload="auto" />
     </main>
   );
 }
