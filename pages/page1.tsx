@@ -143,7 +143,7 @@ export default function Page1() {
   }, []);
 
   return (
-    <div className="relative w-full h-screen overflow-hidden bg-black font-glitch">
+    <div className="relative w-full h-screen overflow-hidden bg-black font-DynaPuff">
       <audio ref={audioRef} src="/smooch.mp3" autoPlay />
 
       {hearts.map((heart) => (

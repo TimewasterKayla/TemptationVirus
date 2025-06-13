@@ -123,31 +123,23 @@ export default function Success() {
       </p>
 
       {/* Buttons Row */}
-      <div className="mt-6 flex justify-center gap-4 flex-wrap">
-        <a
-          href="https://twitter.com/intent/post?text=YUMPFFF~!%F0%9F%94%A5%F0%9F%98%BC%F0%9F%92%96i've%20liiike%2C%20TOTES%20devoted%20myself%202%20%40TimewasterKayla!!%20%F0%9F%A5%B0%F0%9F%8E%80%F0%9F%92%9D%0A%0A%F0%9F%92%96she's%20literally%20SUCH%20a%20%F0%9D%90%87%F0%9D%90%80%F0%9D%90%96%F0%9D%90%93%20brat~%20like~%20who%20could%20ever%20resist%20dropping%20to%20their%20knees%204%20a%20girlie%20like%20her%20omgg%F0%9F%98%BB%F0%9F%92%95%F0%9F%8C%BA%0A%0A%F0%9F%98%87%F0%9F%92%96%F0%9F%98%B5liiike~%20come%20visit%20MOMMY%20%F0%9D%93%82'%F0%9D%93%80%F0%9D%92%B6%F0%9D%93%8E%3F~%F0%9F%98%88%F0%9F%92%8B%E2%9C%A8%20&url=https%3A%2F%2Fx.com%2FTimewasterKayla%2Fstatus%2F1913822281169863159"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="bg-pink-500 text-white px-4 py-2 rounded-lg hover:bg-pink-600 transition-colors duration-200 font-semibold drop-shadow-md cursor-pointer animate-pulse-glow-pink whitespace-nowrap"
-        >
-          💄Sexy Button💄
-        </a>
-        <button
-          onClick={handleRiskyClick}
-          className="bg-red-700 text-white px-4 py-2 rounded-lg hover:bg-red-800 transition-colors duration-200 font-semibold drop-shadow-md cursor-pointer animate-pulse-glow-red whitespace-nowrap"
-        >
-          😈Risky Button😈
-        </button>
-      </div>
+<div className="mt-6 flex justify-center gap-4 flex-wrap">
+  <a
+    href="https://twitter.com/intent/post?text=YUMPFFF~!%F0%9F%94%A5%F0%9F%98%BC%F0%9F%92%96i've%20liiike%2C%20TOTES%20devoted%20myself%202%20%40TimewasterKayla!!%20%F0%9F%A5%B0%F0%9F%8E%80%F0%9F%92%9D%0A%0A%F0%9F%92%96she's%20literally%20SUCH%20a%20%F0%9D%90%87%F0%9D%90%80%F0%9D%90%96%F0%9D%90%93%20brat~%20like~%20who%20could%20ever%20resist%20dropping%20to%20their%20knees%204%20a%20girlie%20like%20her%20omgg%F0%9F%98%BB%F0%9F%92%95%F0%9F%8C%BA%0A%0A%F0%9F%98%87%F0%9F%92%96%F0%9F%98%B5liiike~%20come%20visit%20MOMMY%20%F0%9D%93%82'%F0%9D%93%80%F0%9D%92%B6%F0%9D%93%8E%3F~%F0%9F%98%88%F0%9F%92%8B%E2%9C%A8%20&url=https%3A%2F%2Fx.com%2FTimewasterKayla%2Fstatus%2F1913822281169863159"
+    target="_blank"
+    rel="noopener noreferrer"
+    className="bg-pink-500 text-white px-4 py-2 rounded-lg hover:bg-pink-600 transition-colors duration-200 font-semibold drop-shadow-md cursor-pointer animate-pulse-glow-pink whitespace-nowrap"
+  >
+    💄<span style={{ fontFamily: "'DynaPuff', cursive" }}>Sexy Button</span>💄
+  </a>
+  <button
+    onClick={handleRiskyClick}
+    className="bg-red-700 text-white px-4 py-2 rounded-lg hover:bg-red-800 transition-colors duration-200 font-semibold drop-shadow-md cursor-pointer animate-pulse-glow-red whitespace-nowrap"
+  >
+    😈<span style={{ fontFamily: "'DynaPuff', cursive" }}>Risky Button</span>😈
+  </button>
+</div>
 
-      {/* GIF Below Buttons */}
-      <div className="mt-6 flex justify-center">
-        <img
-          src="/kayla.gif"
-          alt="Kayla GIF"
-          className="max-w-full h-auto rounded-lg shadow-lg"
-        />
-      </div>
 
       {/* Autoplay audio */}
       <audio ref={audioRef} src="/prettylittlebaby.mp3" loop preload="auto" />
