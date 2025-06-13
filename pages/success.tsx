@@ -22,13 +22,27 @@ export default function Success() {
 
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
-  // Play song if flag is set
+  // Autoplay audio on page load or when document ready
   useEffect(() => {
-    const shouldPlay = localStorage.getItem("shouldAutoplaySong") === "true";
-    if (shouldPlay && audioRef.current) {
-      audioRef.current.play().catch(() => {});
-      localStorage.removeItem("shouldAutoplaySong");
+    const audio = audioRef.current;
+    if (!audio) return;
+
+    const playAudio = () => {
+      audio.play().catch((e) => {
+        // Autoplay might be blocked without user interaction, just log or ignore
+        console.warn("Audio autoplay failed:", e);
+      });
+    };
+
+    if (document.readyState === "complete") {
+      playAudio();
+    } else {
+      window.addEventListener("load", playAudio);
     }
+
+    return () => {
+      window.removeEventListener("load", playAudio);
+    };
   }, []);
 
   const [hearts, setHearts] = useState<
@@ -55,13 +69,11 @@ export default function Success() {
   }, []);
 
   const handleRiskyClick = () => {
-    // Stop audio if playing
     if (audioRef.current) {
       audioRef.current.pause();
       audioRef.current.currentTime = 0;
     }
 
-    // You can set any sessionStorage or other logic here if needed
     window.open("/page1", "_blank");
   };
 
@@ -137,11 +149,3 @@ export default function Success() {
     </main>
   );
 }
-
-
-
-
-
-
-
-
