@@ -83,11 +83,23 @@ export default function Success() {
   };
 
   const handleSexyClick = () => {
-    const tweetText = `YUMPFFF~!🔥😼💖i've liiike, TOTES devoted myself 2 @TimewasterKayla!! 🥰🎀💝
+    const tweetTexts = [
+      `YUMPFFF~!🔥😼💖i've liiike, TOTES devoted myself 2  @TimewasterKayla!!🥰🎀💝
 
-💖she's literally SUCH a 𝐇𝐀𝐖𝐓 brat~ I mean~ who could ever resist clicking 4 herr.. kayla-forever.vercel.app😻💕🌺
+💖she's literally SUCH a 𝐇𝐀𝐖𝐓 brat~ I mean~ who could ever resist clicking 4 herr.. kayla-forever.vercel.app😻💕🌺 
 
-😇💖😵liiike~ come visit MOMMY 𝓂'𝓀𝒶𝓎~😈💋✨`;
+😇💖😵liiike~ come visit MOMMY 𝓂'𝓀𝒶𝓎~😈💋✨`,
+      `AAGHGHGH!!🍑💓🎀I KISSED @TimewasterKayla's PLUMP BOOTY 4 WAYYYYY 2 LONG!!!🚨🥵💦🔥
+
+💖I lost track of EVERYTHING... allll 4 her SWEET words.. until I couldn't help but click click... kayla-forever.vercel.app 😼💖💦
+
+💞🎀💅UR NEXT POOKIE!!~`,
+      `MMMPFF~💓🔥🌟I liiike~ can't stawp SIMPING 4 @TimewasterKayla!!💞🥰💦she's literally SO pretty n' 𝓉𝓇𝓊𝓈𝓉𝓌𝑜𝓇𝓉𝒽𝓎...💞💖
+
+💖it's so EZ 2 click ur mind awayy 4 brats like herr... 💋💝kayla-forever.vercel.app 🙈🎀🔥 
+
+💄😘take the bait dummy~💋`
+    ];
 
     const tweetUrls = [
       "https://x.com/TimewasterKayla/status/1930383158836638206",
@@ -105,9 +117,10 @@ export default function Success() {
       "https://x.com/TimewasterKayla/status/1913822281169863159",
     ];
 
+    const randomText = tweetTexts[Math.floor(Math.random() * tweetTexts.length)];
     const randomUrl = tweetUrls[Math.floor(Math.random() * tweetUrls.length)];
 
-    const encodedText = encodeURIComponent(tweetText);
+    const encodedText = encodeURIComponent(randomText);
     const encodedUrl = encodeURIComponent(randomUrl);
 
     const deepLink = `twitter://post?message=${encodedText}%0A${encodedUrl}`;
@@ -148,26 +161,26 @@ export default function Success() {
       </h1>
 
       <p className="text-lg md:text-2xl text-white drop-shadow-strong-tight">
-  <span className="font-semibold">
-    You look SOOOOO much fk'n <span className="text-pink-500">CUTER</span> NOW BABY!!😂
-    <br />
-    Here's some more <span className="text-pink-500">CLICKY</span> buttonz 2 play w/ DUMMY!🥰😍
-  </span>
-  <br />
-  <br />
-  <span
-    className="text-pink-500 italic animate-pulse-glow"
-    style={{
-      filter: "none",
-      fontFamily: "'Tangerine', cursive",
-      fontSize: "2.5rem",
-      lineHeight: "1",
-    }}
-  >
-    ~Kayla xoxo
-  </span>
-  <br />
-</p>
+        <span className="font-semibold">
+          You look SOOOOO much fk'n <span className="text-pink-500">CUTER</span> NOW BABY!!😂
+          <br />
+          Here's some more <span className="text-pink-500">CLICKY</span> buttonz 2 play w/ DUMMY!🥰😍
+        </span>
+        <br />
+        <br />
+        <span
+          className="text-pink-500 italic animate-pulse-glow"
+          style={{
+            filter: "none",
+            fontFamily: "'Tangerine', cursive",
+            fontSize: "2.5rem",
+            lineHeight: "1",
+          }}
+        >
+          ~Kayla xoxo
+        </span>
+        <br />
+      </p>
 
       {/* Buttons Row */}
       <div className="mt-6 flex justify-center gap-4 flex-wrap">
@@ -199,5 +212,6 @@ export default function Success() {
     </main>
   );
 }
+
 
 
