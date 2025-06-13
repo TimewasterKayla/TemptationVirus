@@ -82,6 +82,31 @@ export default function Success() {
     window.open("/page1", "_blank");
   };
 
+  const handleSexyClick = () => {
+    const tweetText = `YUMPFFF~!🔥😼💖i've liiike, TOTES devoted myself 2 
+@TimewasterKayla
+!! 🥰🎀💝
+
+💖she's literally SUCH a 𝐇𝐀𝐖𝐓 brat~ I mean~ who could ever resist clicking 4 herr.. kayla-forever.vercel.app😻💕🌺
+
+😇💖😵liiike~ come visit MOMMY 𝐂'𝐀𝒶𝐎~😈💋✨`;
+    const tweetUrl = "https://x.com/TimewasterKayla/status/1913822281169863159";
+
+    const encodedText = encodeURIComponent(tweetText);
+    const encodedUrl = encodeURIComponent(tweetUrl);
+
+    const deepLink = `twitter://post?message=${encodedText}%0A${encodedUrl}`;
+    const webFallback = `https://twitter.com/intent/tweet?text=${encodedText}&url=${encodedUrl}`;
+
+    const timeout = setTimeout(() => {
+      window.open(webFallback, "_blank");
+    }, 500);
+
+    window.location.href = deepLink;
+
+    window.addEventListener("blur", () => clearTimeout(timeout));
+  };
+
   return (
     <main className="relative flex flex-col items-center justify-center min-h-screen p-6 text-center bg-[url('/backgrounds/backgroundhearts.jpg')] bg-cover bg-center overflow-hidden">
       {/* Floating Hearts */}
@@ -124,14 +149,12 @@ export default function Success() {
 
       {/* Buttons Row */}
       <div className="mt-6 flex justify-center gap-4 flex-wrap">
-        <a
-          href="https://twitter.com/intent/post?text=YUMPFFF~!%F0%9F%94%A5%F0%9F%98%BC%F0%9F%92%96i've%20liiike%2C%20TOTES%20devoted%20myself%202%20%0A%40TimewasterKayla%0A!!%20%F0%9F%A5%B0%F0%9F%8E%80%F0%9F%92%9D%0A%0A%F0%9F%92%96she's%20literally%20SUCH%20a%20%F0%9D%90%87%F0%9D%90%80%F0%9D%90%96%F0%9D%90%93%20brat~%20I%20mean~%20who%20could%20ever%20resist%20clicking%204%20herr..%20kayla-forever.vercel.app%F0%9F%98%BB%F0%9F%92%95%F0%9F%8C%BA%0A%0A%F0%9F%98%87%F0%9F%92%96%F0%9F%98%B5liiike~%20come%20visit%20MOMMY%20%F0%9D%93%82'%F0%9D%93%80%F0%9D%92%B6%F0%9D%93%8E%3F~%F0%9F%98%88%F0%9F%92%8B%E2%9C%A8&url=https%3A%2F%2Fx.com%2FTimewasterKayla%2Fstatus%2F1913822281169863159"
-          target="_blank"
-          rel="noopener noreferrer"
+        <button
+          onClick={handleSexyClick}
           className="bg-pink-500 text-white px-4 py-2 rounded-lg hover:bg-pink-600 transition-colors duration-200 font-semibold drop-shadow-md cursor-pointer animate-pulse-glow-pink whitespace-nowrap"
         >
           💄Sexy Button💄
-        </a>
+        </button>
         <button
           onClick={handleRiskyClick}
           className="bg-red-700 text-white px-4 py-2 rounded-lg hover:bg-red-800 transition-colors duration-200 font-semibold drop-shadow-md cursor-pointer animate-pulse-glow-red whitespace-nowrap"
@@ -154,6 +177,3 @@ export default function Success() {
     </main>
   );
 }
-
-
-
