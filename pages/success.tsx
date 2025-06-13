@@ -12,13 +12,8 @@ export default function Success() {
     dynapuff.href = "https://fonts.googleapis.com/css2?family=DynaPuff&display=swap";
     dynapuff.rel = "stylesheet";
 
-    const chewy = document.createElement("link");
-    chewy.href = "https://fonts.googleapis.com/css2?family=Chewy&display=swap";
-    chewy.rel = "stylesheet";
-
     document.head.appendChild(tangerine);
     document.head.appendChild(dynapuff);
-    document.head.appendChild(chewy);
 
     confetti({
       particleCount: 150,
@@ -29,7 +24,6 @@ export default function Success() {
     return () => {
       document.head.removeChild(tangerine);
       document.head.removeChild(dynapuff);
-      document.head.removeChild(chewy);
     };
   }, []);
 
@@ -153,25 +147,24 @@ export default function Success() {
         💖Profile Updated!💖
       </h1>
 
-      <p className="text-lg md:text-2xl text-white drop-shadow-strong-tight mb-4">
-        {/* THIS paragraph text remains unchanged */}
-        <span>
+      <p className="text-lg md:text-2xl text-white drop-shadow-strong-tight">
+        You look SOOOOO much fk'n CUTER NOW BABY!!😂
+        <br />
+        Here's some more CLICKY buttonz 2 play w/ DUMMY!🥰😍
+        <br />
+        <br />
+        <span
+          className="text-pink-500 italic animate-pulse-glow"
+          style={{
+            filter: "none",
+            fontFamily: "'Tangerine', cursive",
+            fontSize: "2.5rem",
+            lineHeight: "1",
+          }}
+        >
           ~Kayla xoxo
         </span>
-      </p>
-
-      {/* The Chewy gold text you asked for */}
-      <p
-        className="text-2xl md:text-3xl font-normal"
-        style={{
-          fontFamily: "'Chewy', cursive",
-          color: "gold",
-          whiteSpace: "pre-line",
-          lineHeight: "1.3",
-        }}
-      >
-        {`You look SOOOOO much fk'n CUTER NOW BABY!!😂
-Here's some more CLICKY buttonz 2 play w/ DUMMY!🥰😍`}
+        <br />
       </p>
 
       {/* Buttons Row */}
@@ -204,4 +197,5 @@ Here's some more CLICKY buttonz 2 play w/ DUMMY!🥰😍`}
     </main>
   );
 }
+
 
