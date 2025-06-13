@@ -149,9 +149,9 @@ export default function Success() {
 
       <p className="text-lg md:text-2xl text-white drop-shadow-strong-tight">
   <span className="font-semibold">
-    You look SOOOOO much fk'n CUTER NOW BABY!!😂
+    You look SOOOOO much fk'n <span className="text-pink-500">CUTER</span> NOW BABY!!😂
     <br />
-    Here's some more CLICKY buttonz 2 play w/ DUMMY!🥰😍
+    Here's some more <span className="text-pink-500">CLICKY</span> buttonz 2 play w/ DUMMY!🥰😍
   </span>
   <br />
   <br />
