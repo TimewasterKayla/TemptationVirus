@@ -120,12 +120,13 @@ export default function Home() {
     // Spawn the first image immediately
     spawnImage();
 
+    // Spawn new images every 1 second
     const interval = setInterval(() => {
       spawnImage();
-    }, 2000);
+    }, 1000);
 
     return () => clearInterval(interval);
-  }, [nextId, images, lastFilenames]);
+  }, []); // Empty dependency array to avoid re-running effect
 
   return (
     <main className="relative flex flex-col items-center justify-center min-h-screen p-6 text-center bg-[url('/backgrounds/backgroundhearts.jpg')] bg-cover bg-center overflow-hidden">
@@ -167,4 +168,5 @@ export default function Home() {
     </main>
   );
 }
+
 
