@@ -10,6 +10,7 @@ module.exports = {
       fontFamily: {
         tangerine: ['"Tangerine"', 'cursive'],
         dynapuff: ['"DynaPuff"', 'cursive'],
+        glitch: ['"Rubik Glitch"', 'cursive'],
       },
       backgroundImage: {
         hearts: "url('/backgrounds/backgroundhearts.jpg')",

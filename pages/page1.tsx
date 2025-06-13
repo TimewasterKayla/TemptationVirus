@@ -46,7 +46,6 @@ export default function Page1() {
   const audioRef = useRef<HTMLAudioElement>(null);
   const hasQueuedNext = useRef(false);
 
-  // Floating hearts generation
   useEffect(() => {
     const heartEmojis = ['💖', '💗', '💘', '💕', '💞'];
     const colors = ['text-pink-200', 'text-pink-300', 'text-pink-400'];
@@ -64,7 +63,6 @@ export default function Page1() {
     setHearts(generatedHearts);
   }, []);
 
-  // Background video switching
   useEffect(() => {
     const currentVideo = active ? videoRef1.current : videoRef2.current;
     const nextVideo = active ? videoRef2.current : videoRef1.current;
@@ -107,7 +105,6 @@ export default function Page1() {
     };
   }, [current, active]);
 
-  // Floating text sequence
   useEffect(() => {
     if (textIndex >= textLines.length) return;
 
@@ -124,7 +121,6 @@ export default function Page1() {
     };
   }, [textIndex]);
 
-  // Autoplay audio
   useEffect(() => {
     const audio = audioRef.current;
     if (!audio) return;
@@ -135,7 +131,6 @@ export default function Page1() {
       });
     };
 
-    // Some browsers require user interaction first
     if (document.readyState === "complete") {
       playAudio();
     } else {
@@ -148,10 +143,9 @@ export default function Page1() {
   }, []);
 
   return (
-    <div className="relative w-full h-screen overflow-hidden bg-black">
+    <div className="relative w-full h-screen overflow-hidden bg-black font-glitch">
       <audio ref={audioRef} src="/smooch.mp3" autoPlay />
 
-      {/* Floating Hearts */}
       {hearts.map((heart) => (
         <div
           key={heart.id}
@@ -165,7 +159,6 @@ export default function Page1() {
         </div>
       ))}
 
-      {/* Background videos */}
       <video
         ref={videoRef1}
         muted
@@ -179,10 +172,9 @@ export default function Page1() {
         className="absolute top-0 left-0 w-full h-full object-cover transition-opacity duration-500 opacity-0"
       />
 
-      {/* Centered Floating Text */}
       {textIndex < textLines.length && (
         <div
-          className={`absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-white text-3xl font-bold text-center px-6 transition-opacity duration-1000 drop-shadow-[0_0_15px_hotpink] sparkle-text max-w-[90vw] whitespace-normal break-words ${
+          className={`absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-white text-3xl text-center px-6 transition-opacity duration-1000 drop-shadow-[0_0_15px_hotpink] sparkle-text max-w-[90vw] whitespace-normal break-words ${
             showText ? "opacity-100" : "opacity-0"
           }`}
           key={textIndex}
@@ -191,7 +183,6 @@ export default function Page1() {
         </div>
       )}
 
-      {/* Purple Doom Button after last line */}
       {textIndex >= textLines.length && (
         <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-20">
           <a
