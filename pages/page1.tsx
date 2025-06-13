@@ -26,8 +26,8 @@ const textLines = [
   "Another BUTTON is going 2 appear omfggggg🌟🌷🌻👄",
   "it's the SEXIEST one yetttttttt aaaaaaa🔥🎀💄💦",
   "once u cliiiiiick~ n' do as it sayssss🥵😇🍑",
-  "you'll be brought back heree....🔥🎀👄💦",
-  "4 ur HHHHOOOTTT REWARDDDD 💞😼💝🥰",
+  "i PROMISE it will feel DIVINEEEEEE....🔥🎀👄💦",
+  "maybe ill give u a HAWTTTTT REWARDDD 💞😼💝🥰",
   "would i ever lead u astray....?👄👄👄",
   "just...... click.....💄✨💓🚨💕🍑",
 ];
