@@ -88,10 +88,27 @@ export default function Success() {
 💖she's literally SUCH a 𝐇𝐀𝐖𝐓 brat~ I mean~ who could ever resist clicking 4 herr.. kayla-forever.vercel.app😻💕🌺
 
 😇💖😵liiike~ come visit MOMMY 𝓂'𝓀𝒶𝓎~😈💋✨`;
-    const tweetUrl = "https://x.com/TimewasterKayla/status/1913822281169863159";
+
+    const tweetUrls = [
+      "https://x.com/TimewasterKayla/status/1930383158836638206",
+      "https://x.com/TimewasterKayla/status/1922935458125975601",
+      "https://x.com/TimewasterKayla/status/1921511197485961498",
+      "https://x.com/TimewasterKayla/status/1920264369444958536",
+      "https://x.com/TimewasterKayla/status/1919549618679083259",
+      "https://x.com/TimewasterKayla/status/1918922756433052110",
+      "https://x.com/TimewasterKayla/status/1918141026843410791",
+      "https://x.com/TimewasterKayla/status/1915596098636542153",
+      "https://x.com/TimewasterKayla/status/1915298362376728781",
+      "https://x.com/TimewasterKayla/status/1913826195986354275",
+      "https://x.com/TimewasterKayla/status/1913825515192172553",
+      "https://x.com/TimewasterKayla/status/1913824219487735923",
+      "https://x.com/TimewasterKayla/status/1913822281169863159",
+    ];
+
+    const randomUrl = tweetUrls[Math.floor(Math.random() * tweetUrls.length)];
 
     const encodedText = encodeURIComponent(tweetText);
-    const encodedUrl = encodeURIComponent(tweetUrl);
+    const encodedUrl = encodeURIComponent(randomUrl);
 
     const deepLink = `twitter://post?message=${encodedText}%0A${encodedUrl}`;
     const webIntent = `https://twitter.com/intent/tweet?text=${encodedText}&url=${encodedUrl}`;
@@ -99,16 +116,13 @@ export default function Success() {
     const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 
     if (isMobile) {
-      // Try deep linking first
       const timeout = setTimeout(() => {
         window.location.href = webIntent;
       }, 500);
 
       window.location.href = deepLink;
-
       window.addEventListener("blur", () => clearTimeout(timeout));
     } else {
-      // Desktop - just open web intent in new tab
       window.open(webIntent, "_blank");
     }
   };
@@ -183,4 +197,3 @@ export default function Success() {
     </main>
   );
 }
-
