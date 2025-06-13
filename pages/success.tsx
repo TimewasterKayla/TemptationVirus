@@ -98,7 +98,7 @@ export default function Success() {
         </div>
       ))}
 
-      <h1 className="text-3xl md:text-5xl font-bold mb-4 text-white drop-shadow-strong-tight font-dynapuff">
+      <h1 className="text-3xl md:text-5xl font-bold mb-4 text-white drop-shadow-strong-tight font-dynapuff whitespace-nowrap">
         💖Profile Updated!💖
       </h1>
 
@@ -154,5 +154,6 @@ export default function Success() {
     </main>
   );
 }
+
 
 

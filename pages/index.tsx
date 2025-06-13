@@ -151,9 +151,10 @@ export default function Home() {
         />
       ))}
 
-      <h1 className="text-3xl font-bold mb-6 text-white drop-shadow-strong-tight font-dynapuff">
+      <h1 className="text-2xl md:text-3xl font-bold mb-6 text-white drop-shadow-strong-tight font-dynapuff whitespace-nowrap">
         💖Suspicious Button💖
       </h1>
+
       <button
         className="bg-pink-500 text-white px-6 py-3 rounded-lg hover:bg-pink-600 transition-colors duration-200 font-semibold drop-shadow-md cursor-pointer animate-pulse-glow-pink"
         onClick={redirectToTwitter}
@@ -163,3 +164,4 @@ export default function Home() {
     </main>
   );
 }
+
