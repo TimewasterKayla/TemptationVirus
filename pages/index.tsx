@@ -117,6 +117,9 @@ export default function Home() {
       }
     };
 
+    // Spawn the first image immediately
+    spawnImage();
+
     const interval = setInterval(() => {
       spawnImage();
     }, 2000);
