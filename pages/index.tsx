@@ -119,7 +119,7 @@ export default function Home() {
 
     const interval = setInterval(() => {
       spawnImage();
-    }, 1000);
+    }, 700);
 
     return () => clearInterval(interval);
   }, [nextId, images, lastFilenames]);
