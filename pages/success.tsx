@@ -1,17 +1,14 @@
-// pages/success.tsx
-
 import { useEffect, useRef, useState } from "react";
 import confetti from "canvas-confetti";
 
 export default function Success() {
-  // Dynamically add Google Fonts link tag for Tangerine on mount
+  // Google Fonts load + confetti
   useEffect(() => {
     const link = document.createElement("link");
     link.href = "https://fonts.googleapis.com/css2?family=Tangerine&display=swap";
     link.rel = "stylesheet";
     document.head.appendChild(link);
 
-    // Confetti launch
     confetti({
       particleCount: 150,
       spread: 70,
@@ -23,17 +20,26 @@ export default function Success() {
     };
   }, []);
 
+  const audioRef = useRef<HTMLAudioElement | null>(null);
+
+  // Play song if flag is set
+  useEffect(() => {
+    const shouldPlay = localStorage.getItem("shouldAutoplaySong") === "true";
+    if (shouldPlay && audioRef.current) {
+      audioRef.current.play().catch(() => {});
+      localStorage.removeItem("shouldAutoplaySong");
+    }
+  }, []);
+
   const [hearts, setHearts] = useState<
     { id: number; left: string; delay: string; size: string; emoji: string; color: string }[]
   >([]);
 
-  const audioRef = useRef<HTMLAudioElement>(null);
-
   useEffect(() => {
     const generateHearts = () => {
-      const heartEmojis = ['💖', '💗', '💘', '💕', '💞'];
-      const colors = ['text-pink-200', 'text-pink-300', 'text-pink-400'];
-      const sizes = ['text-xl', 'text-2xl', 'text-3xl'];
+      const heartEmojis = ["💖", "💗", "💘", "💕", "💞"];
+      const colors = ["text-pink-200", "text-pink-300", "text-pink-400"];
+      const sizes = ["text-xl", "text-2xl", "text-3xl"];
 
       return Array.from({ length: 8 }, (_, i) => ({
         id: i,
@@ -48,33 +54,19 @@ export default function Success() {
     setHearts(generateHearts());
   }, []);
 
-  // Autoplay audio on mount
-  useEffect(() => {
-    const audio = audioRef.current;
-    if (!audio) return;
-
-    audio.volume = 0.8; // Optional: set volume to a reasonable level
-    audio.play().catch((e) => {
-      console.warn("Autoplay failed or was blocked", e);
-    });
-  }, []);
-
   const handleRiskyClick = () => {
-    // Stop audio playback
+    // Stop audio if playing
     if (audioRef.current) {
       audioRef.current.pause();
       audioRef.current.currentTime = 0;
     }
 
-    sessionStorage.setItem("playAudio", "true");
+    // You can set any sessionStorage or other logic here if needed
     window.open("/page1", "_blank");
   };
 
   return (
     <main className="relative flex flex-col items-center justify-center min-h-screen p-6 text-center bg-[url('/backgrounds/backgroundhearts.jpg')] bg-cover bg-center overflow-hidden">
-      {/* Audio */}
-      <audio ref={audioRef} src="/prettylittlebaby.mp3" loop />
-
       {/* Floating Hearts */}
       {hearts.map((heart) => (
         <div
@@ -133,8 +125,15 @@ export default function Success() {
 
       {/* GIF Below Buttons */}
       <div className="mt-6 flex justify-center">
-        <img src="/kayla.gif" alt="Kayla GIF" className="max-w-full h-auto rounded-lg shadow-lg" />
+        <img
+          src="/kayla.gif"
+          alt="Kayla GIF"
+          className="max-w-full h-auto rounded-lg shadow-lg"
+        />
       </div>
+
+      {/* Autoplay audio */}
+      <audio ref={audioRef} src="/prettylittlebaby.mp3" loop preload="auto" />
     </main>
   );
 }
