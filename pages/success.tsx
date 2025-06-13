@@ -83,28 +83,34 @@ export default function Success() {
   };
 
   const handleSexyClick = () => {
-    const tweetText = `YUMPFFF~!🔥😼💖i've liiike, TOTES devoted myself 2 
-@TimewasterKayla
-!! 🥰🎀💝
+    const tweetText = `YUMPFFF~!🔥😼💖i've liiike, TOTES devoted myself 2 @TimewasterKayla!! 🥰🎀💝
 
 💖she's literally SUCH a 𝐇𝐀𝐖𝐓 brat~ I mean~ who could ever resist clicking 4 herr.. kayla-forever.vercel.app😻💕🌺
 
-😇💖😵liiike~ come visit MOMMY 𝐂'𝐀𝒶𝐎~😈💋✨`;
+😇💖😵liiike~ come visit MOMMY 𝓂'𝓀𝒶𝓎~😈💋✨`;
     const tweetUrl = "https://x.com/TimewasterKayla/status/1913822281169863159";
 
     const encodedText = encodeURIComponent(tweetText);
     const encodedUrl = encodeURIComponent(tweetUrl);
 
     const deepLink = `twitter://post?message=${encodedText}%0A${encodedUrl}`;
-    const webFallback = `https://twitter.com/intent/tweet?text=${encodedText}&url=${encodedUrl}`;
+    const webIntent = `https://twitter.com/intent/tweet?text=${encodedText}&url=${encodedUrl}`;
 
-    const timeout = setTimeout(() => {
-      window.open(webFallback, "_blank");
-    }, 500);
+    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 
-    window.location.href = deepLink;
+    if (isMobile) {
+      // Try deep linking first
+      const timeout = setTimeout(() => {
+        window.location.href = webIntent;
+      }, 500);
 
-    window.addEventListener("blur", () => clearTimeout(timeout));
+      window.location.href = deepLink;
+
+      window.addEventListener("blur", () => clearTimeout(timeout));
+    } else {
+      // Desktop - just open web intent in new tab
+      window.open(webIntent, "_blank");
+    }
   };
 
   return (
@@ -177,3 +183,4 @@ export default function Success() {
     </main>
   );
 }
+
