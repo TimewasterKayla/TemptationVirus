@@ -10,9 +10,7 @@ const videoList = [
   "/videos/video5.mp4",
   "/videos/video6.mp4",
   "/videos/video7.mp4",
-  "/videos/video8.mp4",
   "/videos/video9.mp4",
-  "/videos/video10.mp4",
   "/videos/video11.mp4",
   "/videos/video12.mp4",
   "/videos/video13.mp4",
@@ -39,10 +37,31 @@ export default function Page1() {
   const [active, setActive] = useState(true);
   const [textIndex, setTextIndex] = useState(0);
   const [showText, setShowText] = useState(false);
+  const [hearts, setHearts] = useState<
+    { id: number; left: string; delay: string; size: string; emoji: string; color: string }[]
+  >([]);
 
   const videoRef1 = useRef<HTMLVideoElement>(null);
   const videoRef2 = useRef<HTMLVideoElement>(null);
   const hasQueuedNext = useRef(false);
+
+  // Floating hearts generation
+  useEffect(() => {
+    const heartEmojis = ['💖', '💗', '💘', '💕', '💞'];
+    const colors = ['text-pink-200', 'text-pink-300', 'text-pink-400'];
+    const sizes = ['text-xl', 'text-2xl', 'text-3xl'];
+
+    const generatedHearts = Array.from({ length: 8 }, (_, i) => ({
+      id: i,
+      left: `${Math.floor(Math.random() * 90)}%`,
+      delay: `${Math.random() * 5}s`,
+      size: sizes[Math.floor(Math.random() * sizes.length)],
+      emoji: heartEmojis[Math.floor(Math.random() * heartEmojis.length)],
+      color: colors[Math.floor(Math.random() * colors.length)],
+    }));
+
+    setHearts(generatedHearts);
+  }, []);
 
   useEffect(() => {
     const currentVideo = active ? videoRef1.current : videoRef2.current;
@@ -104,6 +123,20 @@ export default function Page1() {
 
   return (
     <div className="relative w-full h-screen overflow-hidden bg-black">
+      {/* Floating Hearts */}
+      {hearts.map((heart) => (
+        <div
+          key={heart.id}
+          className={`absolute top-full animate-float-heart ${heart.color} ${heart.size} z-10`}
+          style={{
+            left: heart.left,
+            animationDelay: heart.delay,
+          }}
+        >
+          {heart.emoji}
+        </div>
+      ))}
+
       {/* Background videos */}
       <video
         ref={videoRef1}
@@ -146,8 +179,7 @@ export default function Page1() {
 
       <style jsx>{`
         @keyframes sparkle {
-          0%,
-          100% {
+          0%, 100% {
             text-shadow:
               0 0 2px hotpink,
               0 0 4px hotpink,
@@ -168,6 +200,24 @@ export default function Page1() {
           animation: sparkle 2.5s ease-in-out infinite;
         }
 
+        @keyframes float-heart {
+          0% {
+            transform: translateY(0);
+            opacity: 0;
+          }
+          10% {
+            opacity: 1;
+          }
+          100% {
+            transform: translateY(-110vh);
+            opacity: 0;
+          }
+        }
+
+        .animate-float-heart {
+          animation: float-heart 8s ease-in-out infinite;
+        }
+
         @media (min-width: 768px) {
           .sparkle-text {
             font-size: 2.25rem;
@@ -177,12 +227,3 @@ export default function Page1() {
     </div>
   );
 }
-
-
-
-
-
-
-
-
-
