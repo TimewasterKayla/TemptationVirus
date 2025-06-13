@@ -46,6 +46,11 @@ export default function Success() {
     setHearts(generateHearts());
   }, []);
 
+  const handleRiskyClick = () => {
+    sessionStorage.setItem("playAudio", "true");
+    window.open("/page1", "_blank");
+  };
+
   return (
     <main className="relative flex flex-col items-center justify-center min-h-screen p-6 text-center bg-[url('/backgrounds/backgroundhearts.jpg')] bg-cover bg-center overflow-hidden">
       {/* Floating Hearts */}
@@ -94,14 +99,12 @@ export default function Success() {
         >
           💄Sexy Button💄
         </a>
-        <a
-          href="/page1"
-          target="_blank"
-          rel="noopener noreferrer"
+        <button
+          onClick={handleRiskyClick}
           className="bg-red-700 text-white px-4 py-2 rounded-lg hover:bg-red-800 transition-colors duration-200 font-semibold drop-shadow-md cursor-pointer animate-pulse-glow-red whitespace-nowrap"
         >
           😈Risky Button😈
-        </a>
+        </button>
       </div>
 
       {/* GIF Below Buttons */}
@@ -111,6 +114,7 @@ export default function Success() {
     </main>
   );
 }
+
 
 
 

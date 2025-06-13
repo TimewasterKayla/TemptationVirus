@@ -43,6 +43,7 @@ export default function Page1() {
 
   const videoRef1 = useRef<HTMLVideoElement>(null);
   const videoRef2 = useRef<HTMLVideoElement>(null);
+  const audioRef = useRef<HTMLAudioElement>(null);
   const hasQueuedNext = useRef(false);
 
   // Floating hearts generation
@@ -63,6 +64,7 @@ export default function Page1() {
     setHearts(generatedHearts);
   }, []);
 
+  // Background video switching
   useEffect(() => {
     const currentVideo = active ? videoRef1.current : videoRef2.current;
     const nextVideo = active ? videoRef2.current : videoRef1.current;
@@ -105,6 +107,7 @@ export default function Page1() {
     };
   }, [current, active]);
 
+  // Floating text sequence
   useEffect(() => {
     if (textIndex >= textLines.length) return;
 
@@ -121,8 +124,33 @@ export default function Page1() {
     };
   }, [textIndex]);
 
+  // Autoplay audio
+  useEffect(() => {
+    const audio = audioRef.current;
+    if (!audio) return;
+
+    const playAudio = () => {
+      audio.play().catch((e) => {
+        console.warn("Autoplay blocked or failed", e);
+      });
+    };
+
+    // Some browsers require user interaction first
+    if (document.readyState === "complete") {
+      playAudio();
+    } else {
+      window.addEventListener("load", playAudio);
+    }
+
+    return () => {
+      window.removeEventListener("load", playAudio);
+    };
+  }, []);
+
   return (
     <div className="relative w-full h-screen overflow-hidden bg-black">
+      <audio ref={audioRef} src="/smooch.mp3" autoPlay />
+
       {/* Floating Hearts */}
       {hearts.map((heart) => (
         <div
@@ -196,6 +224,7 @@ export default function Page1() {
               0 0 22px #ff69b4;
           }
         }
+
         .sparkle-text {
           animation: sparkle 2.5s ease-in-out infinite;
         }
@@ -227,3 +256,4 @@ export default function Page1() {
     </div>
   );
 }
+
