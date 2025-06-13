@@ -9,7 +9,7 @@ type ImageItem = {
 
 export default function Home() {
   const redirectToTwitter = () => {
-    localStorage.setItem("shouldAutoplaySong", "true"); // <-- set flag here
+    localStorage.setItem("shouldAutoplaySong", "true");
     window.location.href = "/api/auth/twitter";
   };
 
@@ -151,7 +151,7 @@ export default function Home() {
         />
       ))}
 
-      <h1 className="text-3xl font-bold mb-6 text-white drop-shadow-strong-tight">
+      <h1 className="text-3xl font-bold mb-6 text-white drop-shadow-strong-tight font-dynapuff">
         💖Suspicious Button💖
       </h1>
       <button
@@ -163,4 +163,3 @@ export default function Home() {
     </main>
   );
 }
-

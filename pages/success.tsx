@@ -2,12 +2,18 @@ import { useEffect, useRef, useState } from "react";
 import confetti from "canvas-confetti";
 
 export default function Success() {
-  // Google Fonts load + confetti
+  // Load Google Fonts dynamically
   useEffect(() => {
-    const link = document.createElement("link");
-    link.href = "https://fonts.googleapis.com/css2?family=Tangerine&display=swap";
-    link.rel = "stylesheet";
-    document.head.appendChild(link);
+    const tangerine = document.createElement("link");
+    tangerine.href = "https://fonts.googleapis.com/css2?family=Tangerine&display=swap";
+    tangerine.rel = "stylesheet";
+
+    const dynapuff = document.createElement("link");
+    dynapuff.href = "https://fonts.googleapis.com/css2?family=DynaPuff&display=swap";
+    dynapuff.rel = "stylesheet";
+
+    document.head.appendChild(tangerine);
+    document.head.appendChild(dynapuff);
 
     confetti({
       particleCount: 150,
@@ -16,20 +22,19 @@ export default function Success() {
     });
 
     return () => {
-      document.head.removeChild(link);
+      document.head.removeChild(tangerine);
+      document.head.removeChild(dynapuff);
     };
   }, []);
 
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
-  // Autoplay audio on page load or when document ready
   useEffect(() => {
     const audio = audioRef.current;
     if (!audio) return;
 
     const playAudio = () => {
       audio.play().catch((e) => {
-        // Autoplay might be blocked without user interaction, just log or ignore
         console.warn("Audio autoplay failed:", e);
       });
     };
@@ -93,7 +98,7 @@ export default function Success() {
         </div>
       ))}
 
-      <h1 className="text-3xl md:text-5xl font-bold mb-4 text-white drop-shadow-strong-tight">
+      <h1 className="text-3xl md:text-5xl font-bold mb-4 text-white drop-shadow-strong-tight font-dynapuff">
         💖Profile Updated!💖
       </h1>
 
@@ -149,3 +154,4 @@ export default function Success() {
     </main>
   );
 }
+

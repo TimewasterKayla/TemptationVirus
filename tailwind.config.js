@@ -9,6 +9,7 @@ module.exports = {
     extend: {
       fontFamily: {
         tangerine: ['"Tangerine"', 'cursive'],
+        dynapuff: ['"DynaPuff"', 'cursive'],
       },
       backgroundImage: {
         hearts: "url('/backgrounds/backgroundhearts.jpg')",
@@ -85,4 +86,5 @@ module.exports = {
     }),
   ],
 };
+
 

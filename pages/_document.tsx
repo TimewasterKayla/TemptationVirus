@@ -5,11 +5,11 @@ export default function Document() {
   return (
     <Html lang="en">
       <Head>
-        {/* Optimize font loading for Google Fonts - Tangerine */}
+        {/* Optimize font loading for Google Fonts - Tangerine & DynaPuff */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link
-          href="https://fonts.googleapis.com/css2?family=Tangerine&display=swap"
+          href="https://fonts.googleapis.com/css2?family=Tangerine&family=DynaPuff&display=swap"
           rel="stylesheet"
         />
       </Head>
