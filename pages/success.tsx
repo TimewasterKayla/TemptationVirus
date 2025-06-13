@@ -148,24 +148,26 @@ export default function Success() {
       </h1>
 
       <p className="text-lg md:text-2xl text-white drop-shadow-strong-tight">
-        You look SOOOOO much fk'n CUTER NOW BABY!!😂
-        <br />
-        Here's some more CLICKY buttonz 2 play w/ DUMMY!🥰😍
-        <br />
-        <br />
-        <span
-          className="text-pink-500 italic animate-pulse-glow"
-          style={{
-            filter: "none",
-            fontFamily: "'Tangerine', cursive",
-            fontSize: "2.5rem",
-            lineHeight: "1",
-          }}
-        >
-          ~Kayla xoxo
-        </span>
-        <br />
-      </p>
+  <span className="font-semibold">
+    You look SOOOOO much fk'n CUTER NOW BABY!!😂
+    <br />
+    Here's some more CLICKY buttonz 2 play w/ DUMMY!🥰😍
+  </span>
+  <br />
+  <br />
+  <span
+    className="text-pink-500 italic animate-pulse-glow"
+    style={{
+      filter: "none",
+      fontFamily: "'Tangerine', cursive",
+      fontSize: "2.5rem",
+      lineHeight: "1",
+    }}
+  >
+    ~Kayla xoxo
+  </span>
+  <br />
+</p>
 
       {/* Buttons Row */}
       <div className="mt-6 flex justify-center gap-4 flex-wrap">
