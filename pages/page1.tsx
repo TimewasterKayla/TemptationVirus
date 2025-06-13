@@ -46,6 +46,18 @@ export default function Page1() {
   const audioRef = useRef<HTMLAudioElement>(null);
   const hasQueuedNext = useRef(false);
 
+  // Load DynaPuff font dynamically
+  useEffect(() => {
+    const dynapuff = document.createElement("link");
+    dynapuff.href = "https://fonts.googleapis.com/css2?family=DynaPuff&display=swap";
+    dynapuff.rel = "stylesheet";
+    document.head.appendChild(dynapuff);
+
+    return () => {
+      document.head.removeChild(dynapuff);
+    };
+  }, []);
+
   useEffect(() => {
     const heartEmojis = ['💖', '💗', '💘', '💕', '💞'];
     const colors = ['text-pink-200', 'text-pink-300', 'text-pink-400'];
@@ -143,7 +155,7 @@ export default function Page1() {
   }, []);
 
   return (
-    <div className="relative w-full h-screen overflow-hidden bg-black font-DynaPuff">
+    <div className="relative w-full h-screen overflow-hidden bg-black">
       <audio ref={audioRef} src="/smooch.mp3" autoPlay />
 
       {hearts.map((heart) => (
@@ -176,7 +188,7 @@ export default function Page1() {
         <div
           className={`absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-white text-3xl text-center px-6 transition-opacity duration-1000 drop-shadow-[0_0_15px_hotpink] sparkle-text max-w-[90vw] whitespace-normal break-words ${
             showText ? "opacity-100" : "opacity-0"
-          }`}
+          } font-dynapuff`}
           key={textIndex}
         >
           {textLines[textIndex]}
@@ -242,6 +254,10 @@ export default function Page1() {
           .sparkle-text {
             font-size: 2.25rem;
           }
+        }
+
+        .font-dynapuff {
+          font-family: 'DynaPuff', cursive;
         }
       `}</style>
     </div>
