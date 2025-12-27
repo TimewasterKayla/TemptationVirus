@@ -1,5 +1,5 @@
 {
-  "name": "twitter-profile-updater",
+  "name": "virus-twitter-profile-updater",
   "version": "1.0.0",
   "scripts": {
     "dev": "next dev",
@@ -32,14 +32,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/TimewasterKayla/KaylaClickyLink.git"
+    "url": "git+https://github.com/TimewasterKayla/TemptationVirus.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/TimewasterKayla/KaylaClickyLink/issues"
+    "url": "https://github.com/TimewasterKayla/TemptationVirus/issues"
   },
-  "homepage": "https://github.com/TimewasterKayla/KaylaClickyLink#readme",
+  "homepage": "https://github.com/TimewasterKayla/TemptationVirus#readme",
   "description": ""
 }
