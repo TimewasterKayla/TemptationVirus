@@ -150,14 +150,14 @@ export default function Home() {
 
       <div className="relative z-10 p-6">
         <h1 className="text-2xl md:text-3xl font-bold mb-6 text-white drop-shadow-strong-tight font-dynapuff whitespace-nowrap">
-          💖Suspicious Button💖
+          💚Suspicious Button💚
         </h1>
 
         <button
           onClick={redirectToTwitter}
-          className="bg-pink-500 text-white px-6 py-3 rounded-lg hover:bg-pink-600 transition-colors duration-200 font-semibold drop-shadow-md animate-pulse-glow-pink"
+          className="bg-green-400 text-white px-6 py-3 rounded-lg hover:bg-gink-600 transition-colors duration-200 font-semibold drop-shadow-md animate-pulse-glow-pink"
         >
-          🎀Click Meee🎀
+          🎀Click Meee! OwO🎀
         </button>
       </div>
     </main>
