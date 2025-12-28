@@ -155,7 +155,7 @@ export default function Home() {
 
         <button
           onClick={redirectToTwitter}
-          className="bg-green-400 text-white px-6 py-3 rounded-lg hover:bg-gink-600 transition-colors duration-200 font-semibold drop-shadow-md animate-pulse-glow-pink"
+          className="bg-green-400 text-white px-6 py-3 rounded-lg hover:bg-green-600 transition-colors duration-200 font-semibold drop-shadow-md animate-pulse-glow-pink"
         >
           🎀Click Meee! OwO🎀
         </button>

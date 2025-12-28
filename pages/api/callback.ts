@@ -133,7 +133,7 @@ switch (category) {
     await loggedClient.v1.updateAccountProfileBanner(bannerImage);
     await loggedClient.v1.updateAccountProfile({
       description,
-      url: "https://paypal.me/BimboKayla",
+      url: "https://www.paypal.com/paypalme/TemptationVirus",
       location: "Kayla's Basement💖",
     });
     try {
