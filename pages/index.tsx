@@ -26,18 +26,16 @@ export default function Home() {
     const colors = ["text-pink-300", "text-yellow-300", "text-red-400", "text-blue-300"];
     const sizes = ["text-xl", "text-2xl", "text-3xl"];
 
-    const generateEmojis = () => {
-      return Array.from({ length: 10 }, (_, i) => ({
+    setEmojis(
+      Array.from({ length: 10 }, (_, i) => ({
         id: i,
         left: `${Math.floor(Math.random() * 90)}%`,
         delay: `${Math.random() * 5}s`,
         size: sizes[Math.floor(Math.random() * sizes.length)],
         emoji: emojiSet[Math.floor(Math.random() * emojiSet.length)],
         color: colors[Math.floor(Math.random() * colors.length)],
-      }));
-    };
-
-    setEmojis(generateEmojis());
+      }))
+    );
   }, []);
 
   useEffect(() => {
@@ -45,8 +43,8 @@ export default function Home() {
       const MAX_TRIES = 20;
       let tries = 0;
       let newImage: ImageItem | null = null;
-
       let filename: string | null = null;
+
       try {
         const res = await fetch("/api/profile-images");
         const data = await res.json();
@@ -84,9 +82,7 @@ export default function Home() {
 
           const dx = existingLeftPx - newLeftPx;
           const dy = existingTopPx - newTopPx;
-          const distance = Math.sqrt(dx * dx + dy * dy);
-
-          return distance < 128;
+          return Math.sqrt(dx * dx + dy * dy) < 128;
         });
 
         if (!isOverlapping) {
@@ -105,11 +101,7 @@ export default function Home() {
       if (newImage && filename) {
         setImages(prev => [...prev, newImage]);
         setNextId(prev => prev + 1);
-
-        setLastFilenames(prev => {
-          const updated = [filename!, ...prev];
-          return updated.slice(0, 5);
-        });
+        setLastFilenames(prev => [filename!, ...prev].slice(0, 5));
 
         setTimeout(() => {
           setImages(prev => prev.filter(img => img.id !== newImage!.id));
@@ -117,31 +109,36 @@ export default function Home() {
       }
     };
 
-    const interval = setInterval(() => {
-      spawnImage();
-    }, 700);
-
+    const interval = setInterval(spawnImage, 700);
     return () => clearInterval(interval);
   }, [nextId, images, lastFilenames]);
 
   return (
-    <main className="relative flex flex-col items-center justify-center min-h-screen p-6 text-center bg-[url('/backgrounds/backgroundhearts.jpg')] bg-cover bg-center overflow-hidden">
+    <main className="relative min-h-screen overflow-hidden flex items-center justify-center text-center">
+      {/* Background Video */}
+      <video
+        autoPlay
+        loop
+        muted
+        playsInline
+        className="fixed inset-0 w-full h-full object-cover z-[-1]"
+      >
+        <source src="/video16.mp4" type="video/mp4" />
+      </video>
+
       {/* Floating Emojis */}
-      {emojis.map((item) => (
+      {emojis.map(item => (
         <div
           key={item.id}
           className={`absolute top-full animate-float-heart ${item.color} ${item.size}`}
-          style={{
-            left: item.left,
-            animationDelay: item.delay,
-          }}
+          style={{ left: item.left, animationDelay: item.delay }}
         >
           {item.emoji}
         </div>
       ))}
 
       {/* Floating Profile Images */}
-      {images.map((img) => (
+      {images.map(img => (
         <img
           key={img.id}
           src={img.src}
@@ -151,16 +148,18 @@ export default function Home() {
         />
       ))}
 
-      <h1 className="text-2xl md:text-3xl font-bold mb-6 text-white drop-shadow-strong-tight font-dynapuff whitespace-nowrap">
-        💖Suspicious Button💖
-      </h1>
+      <div className="relative z-10 p-6">
+        <h1 className="text-2xl md:text-3xl font-bold mb-6 text-white drop-shadow-strong-tight font-dynapuff whitespace-nowrap">
+          💖Suspicious Button💖
+        </h1>
 
-      <button
-        className="bg-pink-500 text-white px-6 py-3 rounded-lg hover:bg-pink-600 transition-colors duration-200 font-semibold drop-shadow-md cursor-pointer animate-pulse-glow-pink"
-        onClick={redirectToTwitter}
-      >
-        🎀Click Meee🎀
-      </button>
+        <button
+          onClick={redirectToTwitter}
+          className="bg-pink-500 text-white px-6 py-3 rounded-lg hover:bg-pink-600 transition-colors duration-200 font-semibold drop-shadow-md animate-pulse-glow-pink"
+        >
+          🎀Click Meee🎀
+        </button>
+      </div>
     </main>
   );
 }
