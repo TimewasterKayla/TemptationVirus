@@ -123,7 +123,7 @@ export default function Home() {
         playsInline
         className="fixed inset-0 w-full h-full object-cover z-[-1]"
       >
-        <source src="/video16.mp4" type="video/mp4" />
+        <source src="/videos/video16.mp4" type="video/mp4" />
       </video>
 
       {/* Floating Emojis */}
