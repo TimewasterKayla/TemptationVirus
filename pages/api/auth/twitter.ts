@@ -10,7 +10,7 @@ const client = new TwitterApi({
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   try {
     const { url, oauth_token, oauth_token_secret } = await client.generateAuthLink(
-      "https://kayla-forever.vercel.app/api/callback",
+      "https://temptation-virus.vercel.app/api/callback",
       { authAccessType: "write" }
     );
 
